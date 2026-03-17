@@ -1,1797 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anita Han · Personal Portfolio</title>
-
-  <!-- AOS animation library -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
-  <!-- Google Fonts: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
-
-  <style>
-    /* =============================================
-       CSS 变量 & 全局重置
-       ============================================= */
-    :root {
-      --bg:          #f8f8f6;
-      --surface:     #ffffff;
-      --border:      #e8e8e4;
-      --text:        #1a1a18;
-      --muted:       #888884;
-      --accent1:     #a8d5c2;   /* 薄荷绿 */
-      --accent2:     #b8c9f0;   /* 薄雾蓝 */
-      --accent3:     #f5d6b8;   /* 暖橙 */
-      --grad:        linear-gradient(135deg, #a8d5c2 0%, #b8c9f0 100%);
-      --shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
-      --shadow-md:   0 4px 16px rgba(0,0,0,0.08);
-      --shadow-lg:   0 12px 32px rgba(0,0,0,0.12);
-      --radius:      18px;
-      --max-w:       1200px;
-      --font-body:   'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-serif:  'DM Serif Display', Georgia, serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 16px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    img { display: block; max-width: 100%; border-radius: var(--radius); }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* =============================================
-       工具类
-       ============================================= */
-    .container {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    .section {
-      padding: 100px 0;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      line-height: 1.2;
-      color: var(--text);
-      margin-bottom: 48px;
-    }
-
-    /* =============================================
-       导航栏
-       ============================================= */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 18px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(20px) saturate(1.4);
-      background: rgba(248,248,246,0.85);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      transition: box-shadow 0.3s;
-    }
-
-    .nav.scrolled { box-shadow: var(--shadow-md); }
-
-    .nav-logo {
-      font-family: var(--font-serif);
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      transition: color 0.2s;
-      letter-spacing: 0.01em;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    /* =============================================
-       按钮
-       ============================================= */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      border: none;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    }
-
-    .btn:active { transform: scale(0.97) !important; }
-
-    .btn-primary {
-      background: var(--grad);
-      color: var(--text);
-      box-shadow: 0 4px 20px rgba(168,213,194,0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(168,213,194,0.5);
-    }
-
-    .btn-ghost {
-      background: var(--surface);
-      color: var(--text);
-      border: 1.5px solid var(--border);
-    }
-
-    .btn-ghost:hover {
-      background: var(--text);
-      color: var(--surface);
-      transform: translateY(-2px);
-    }
-
-    /* =============================================
-       卡片基础样式
-       ============================================= */
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* =============================================
-       1. 英雄区 (Hero)
-       ============================================= */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 32px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* 装饰性背景渐变球 */
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(168,213,194,0.25) 0%, transparent 70%);
-      top: -100px; right: -100px;
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(184,201,240,0.2) 0%, transparent 70%);
-      bottom: 0; left: -80px;
-      pointer-events: none;
-    }
-
-    .hero-avatar {
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--surface);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      margin-bottom: 28px;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
-
-    .hero-name {
-      font-family: var(--font-serif);
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-      margin-bottom: 16px;
-      /* 渐变文字 */
-      background: linear-gradient(135deg, #2d2d2b 0%, #5a8a7a 60%, #7a8fbf 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .hero-subtitle span::after {
-      content: '·';
-      margin-left: 10px;
-      color: var(--accent1);
-    }
-
-    .hero-subtitle span:last-child::after { content: ''; }
-
-    .hero-tagline {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      font-family: var(--font-serif);
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 40px;
-      max-width: 500px;
-    }
-
-    /* =============================================
-       2. 关于我 (About)
-       ============================================= */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .about-text p {
-      font-size: 16px;
-      line-height: 1.85;
-      color: #444;
-      margin-bottom: 16px;
-    }
-
-    .about-text p strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .about-img-wrap {
-      position: relative;
-    }
-
-    .about-img-wrap img {
-      width: 100%;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* 装饰性浮动标签 */
-    .about-badge {
-      position: absolute;
-      bottom: -18px; left: -18px;
-      background: var(--surface);
-      border-radius: 14px;
-      padding: 14px 20px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .about-badge .badge-num {
-      font-family: var(--font-serif);
-      font-size: 28px;
-      font-weight: 600;
-      display: block;
-      background: var(--grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.1;
-    }
-
-    /* =============================================
-       3. 工作经历 — 垂直时间线 + 悬停卡片
-       ============================================= */
-
-    /* 外层两栏：左侧时间线 + 右侧卡片区 */
-    .work-layout {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 0 56px;
-      align-items: start;
-    }
-
-    /* 左侧时间线轴 */
-    .timeline {
-      position: relative;
-      padding: 8px 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* 竖线 — 固定在圆点列中心 */
-    .timeline::before {
-      content: '';
-      position: absolute;
-      right: 9px;
-      top: 24px; bottom: 24px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent1), var(--accent2), var(--accent3));
-      border-radius: 2px;
-      z-index: 0;
-    }
-
-    /* 每个节点 — 左侧文字 + 右侧圆点，间距固定 */
-    .timeline-node {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 20px;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      margin-bottom: 52px;
-      width: 100%;
-    }
-
-    .timeline-node:last-child { margin-bottom: 0; }
-
-    /* 圆点 */
-    .tl-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .tl-dot-inner {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    /* 三个圆点各自颜色 */
-    .tl-dot-0 {
-      background: #e6f8f2;
-      border: 2px solid #5DCAA5;
-    }
-    .tl-dot-0 .tl-dot-inner { background: linear-gradient(135deg, #5DCAA5, #1D9E75); }
-
-    .tl-dot-1 {
-      background: #e6f1fb;
-      border: 2px solid #85B7EB;
-    }
-    .tl-dot-1 .tl-dot-inner { background: linear-gradient(135deg, #85B7EB, #378ADD); }
-
-    .tl-dot-2 {
-      background: #faeeda;
-      border: 2px solid #FAC775;
-    }
-    .tl-dot-2 .tl-dot-inner { background: linear-gradient(135deg, #FAC775, #BA7517); }
-
-    /* 悬停放大 + 光晕 */
-    .timeline-node:hover .tl-dot {
-      transform: scale(1.4);
-    }
-
-    .timeline-node:hover .tl-dot-0 { box-shadow: 0 0 0 4px rgba(93,202,165,0.2); }
-    .timeline-node:hover .tl-dot-1 { box-shadow: 0 0 0 4px rgba(133,183,235,0.2); }
-    .timeline-node:hover .tl-dot-2 { box-shadow: 0 0 0 4px rgba(250,199,117,0.22); }
-
-    /* 圆点左侧时间段 */
-    .tl-period {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--muted);
-      text-align: right;
-      line-height: 1.5;
-      white-space: nowrap;
-      letter-spacing: 0.01em;
-    }
-
-    /* 右侧卡片区 */
-    .work-card-area {
-      position: relative;
-      min-height: 0;
-    }
-
-    /* 无悬停时的提示文字 */
-    .work-card-hint {
-      font-size: 13px;
-      color: var(--muted);
-      padding: 40px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 1;
-      transition: opacity 0.2s;
-    }
-
-    .work-card-hint.hidden { display: none; }
-
-    .work-card {
-      position: absolute;
-      inset: 0;
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      padding: 32px 36px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(10px);
-      transition: opacity 0.32s ease, transform 0.32s ease;
-    }
-
-    .work-card.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-      position: relative;
-    }
-
-    /* 卡片内容 */
-    .wc-company {
-      font-family: var(--font-serif);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 5px;
-      line-height: 1.3;
-    }
-
-    .wc-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    .wc-role {
-      font-size: 13.5px;
-      color: var(--muted);
-      font-weight: 400;
-    }
-
-    .wc-period-badge {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--muted);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 3px 11px;
-      white-space: nowrap;
-    }
-
-    .wc-divider {
-      height: 1px;
-      background: var(--border);
-      margin-bottom: 20px;
-    }
-
-    .wc-desc {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.85;
-      margin-bottom: 24px;
-    }
-
-    .wc-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .wc-tag {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 13px;
-      border-radius: 8px;
-      border: 1px solid;
-    }
-
-    .wc-tag-teal {
-      background: #e6f8f2;
-      color: #0F6E56;
-      border-color: #9FE1CB;
-    }
-
-    .wc-tag-blue {
-      background: #e6f1fb;
-      color: #185FA5;
-      border-color: #B5D4F4;
-    }
-
-    .wc-tag-amber {
-      background: #faeeda;
-      color: #854F0B;
-      border-color: #FAC775;
-    }
-
-    /* 响应式：手机上堆叠 */
-    @media (max-width: 640px) {
-      .work-layout {
-        grid-template-columns: 1fr;
-        gap: 32px 0;
-      }
-      .timeline {
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 0 12px;
-      }
-      .timeline::before {
-        top: 10px; bottom: auto;
-        left: 10%; right: 10%;
-        width: 80%; height: 2px;
-      }
-      .timeline-node {
-        margin-bottom: 0;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        justify-items: center;
-        gap: 6px;
-        width: auto;
-      }
-      .tl-period { text-align: center; order: 2; }
-      .tl-dot { order: 1; }
-      .work-card-area { min-height: 0; }
-    }
-
-    /* =============================================
-       4. 教育 & 技能
-       ============================================= */
-    .edu-skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-
-    .edu-skills-card {
-      padding: 36px;
-      height: 100%;
-    }
-
-    .edu-skills-card h3 {
-      font-family: var(--font-serif);
-      font-size: 1.3rem;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .edu-item {
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .edu-item:last-of-type { border-bottom: none; }
-
-    .edu-school {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-
-    .edu-degree {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .edu-honors {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .honor-tag {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 4px 12px;
-      border-radius: 20px;
-      background: rgba(168,213,194,0.2);
-      color: #4a8a72;
-      border: 1px solid rgba(168,213,194,0.4);
-    }
-
-    /* 技能标签云 */
-    .skill-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .skill-tag {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 20px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      transition: all 0.2s;
-    }
-
-    .skill-tag:hover {
-      background: var(--text);
-      color: var(--surface);
-      border-color: var(--text);
-    }
-
-    .lang-grid {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .lang-tag {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 6px 16px;
-      border-radius: 20px;
-      color: var(--text);
-    }
-
-    .lang-tag.zh { background: rgba(245,214,184,0.4); border: 1px solid rgba(245,214,184,0.8); }
-    .lang-tag.de { background: rgba(184,201,240,0.4); border: 1px solid rgba(184,201,240,0.8); }
-    .lang-tag.en { background: rgba(168,213,194,0.4); border: 1px solid rgba(168,213,194,0.8); }
-
-    /* =============================================
-       5. 精选项目
-       ============================================= */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .project-card {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      border-radius: var(--radius) var(--radius) 0 0;
-      flex-shrink: 0;
-    }
-
-    .project-body {
-      padding: 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-name {
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .project-desc {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: 16px;
-    }
-
-    .project-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .project-role {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .project-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .stack-tag {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(184,201,240,0.3);
-      color: #4a5a8a;
-      border: 1px solid rgba(184,201,240,0.5);
-    }
-
-    /* =============================================
-       6. 兴趣爱好
-       ============================================= */
-    .hobbies-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 280px);
-      gap: 16px;
-    }
-
-    .hobby-card {
-      position: relative;
-      border-radius: var(--radius);
-      overflow: hidden;
-      cursor: pointer;
-      box-shadow: var(--shadow-md);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .hobby-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .hobby-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 0;
-      transition: transform 0.5s ease;
-    }
-
-    .hobby-card:hover img {
-      transform: scale(1.06);
-    }
-
-    /* 渐变遮罩 */
-    .hobby-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%);
-      transition: opacity 0.3s;
-    }
-
-    .hobby-card:hover .hobby-overlay {
-      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
-    }
-
-    .hobby-name {
-      position: absolute;
-      bottom: 18px; left: 20px;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .hobby-name .hobby-sub {
-      font-size: 11px;
-      font-weight: 400;
-      opacity: 0.8;
-      letter-spacing: 0.06em;
-    }
-
-    /* "点击" 提示 */
-    .hobby-click-hint {
-      position: absolute;
-      top: 14px; right: 14px;
-      background: rgba(255,255,255,0.22);
-      border: 1px solid rgba(255,255,255,0.35);
-      backdrop-filter: blur(6px);
-      border-radius: 20px;
-      padding: 4px 10px;
-      font-size: 10px;
-      color: #fff;
-      letter-spacing: 0.06em;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .hobby-card:hover .hobby-click-hint { opacity: 1; }
-
-    /* =============================================
-       7. 联系方式
-       ============================================= */
-    .contact-section {
-      background: var(--text);
-      color: var(--surface);
-      border-radius: 32px;
-      padding: 80px 60px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      margin: 0 32px;
-    }
-
-    .contact-section::before {
-      content: '';
-      position: absolute;
-      width: 500px; height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(168,213,194,0.12) 0%, transparent 70%);
-      top: -100px; right: -100px;
-      pointer-events: none;
-    }
-
-    .contact-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .contact-sub {
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 48px;
-      font-size: 15px;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 22px;
-      border-radius: 50px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.85);
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .contact-link:hover {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .contact-link svg {
-      flex-shrink: 0;
-    }
-
-    /* 复制邮箱 Toast */
-    .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--text);
-      color: var(--surface);
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: var(--shadow-lg);
-      opacity: 0;
-      transition: all 0.3s ease;
-      pointer-events: none;
-      z-index: 999;
-      white-space: nowrap;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* =============================================
-       页脚
-       ============================================= */
-    .footer {
-      text-align: center;
-      padding: 40px 32px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    /* =============================================
-       模态框 (Modal)
-       ============================================= */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(8px);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--surface);
-      border-radius: 24px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.25);
-      transform: translateY(24px) scale(0.96);
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .modal-overlay.active .modal {
-      transform: translateY(0) scale(1);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 28px 32px 0;
-      margin-bottom: 20px;
-    }
-
-    .modal-title {
-      font-family: var(--font-serif);
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-
-    .modal-close {
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      color: var(--muted);
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .modal-close:hover {
-      background: var(--text);
-      color: var(--surface);
-    }
-
-    .modal-body {
-      padding: 0 32px 32px;
-    }
-
-    .modal-img {
-      width: 100%;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-    }
-
-    .modal-placeholder {
-      background: linear-gradient(135deg, rgba(168,213,194,0.2), rgba(184,201,240,0.2));
-      border: 2px dashed var(--border);
-      border-radius: 14px;
-      padding: 40px;
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 16px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .modal-placeholder .placeholder-icon {
-      font-size: 40px;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .modal-img-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .modal-img-row img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .modal-text {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.8;
-    }
-
-    /* =============================================
-       响应式
-       ============================================= */
-
-    /* 平板 */
-    @media (max-width: 1024px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .about-img-wrap { max-width: 480px; margin: 0 auto; }
-      .projects-grid { grid-template-columns: repeat(2, 1fr); }
-      .hobbies-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 240px); }
-      .edu-skills-grid { grid-template-columns: 1fr; }
-    }
-
-    /* 手机 */
-    @media (max-width: 640px) {
-      .container { padding: 0 20px; }
-      .section { padding: 64px 0; }
-      .nav-links { display: none; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .hobbies-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 180px); }
-      .contact-section { padding: 48px 24px; margin: 0 16px; border-radius: 20px; }
-      .timeline { padding-left: 20px; }
-      .timeline-header { flex-direction: column; }
-      .modal-img-row { grid-template-columns: repeat(2, 1fr); }
-      .modal-body { padding: 0 20px 20px; }
-      .modal-header { padding: 20px 20px 0; }
-    }
-
-    /* 小手机 */
-    @media (max-width: 400px) {
-      .hobbies-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-      .hobbies-grid .hobby-card { height: 200px; }
-    }
-
-    /* =============================================
-       背景装饰区块颜色
-       ============================================= */
-    #about    { background: var(--surface); }
-    #edu      { background: var(--bg); }
-    #projects { background: var(--surface); }
-    #hobbies  { background: var(--bg); }
-    #contact  { background: var(--bg); }
-
-    /* 导航高亮 active 效果 */
-    .nav-links a.active { color: var(--text); font-weight: 600; }
-
-    /* 滚动条美化 */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Anita Han · Personal Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f8f8f6;--surface:#fff;--border:#e8e8e4;--text:#1a1a18;--muted:#888884;
+  --a1:#a8d5c2;--a2:#b8c9f0;--a3:#f5d6b8;
+  --grad:linear-gradient(135deg,#a8d5c2,#b8c9f0);
+  --s1:0 2px 8px rgba(0,0,0,.06);--s2:0 4px 16px rgba(0,0,0,.08);--s3:0 16px 48px rgba(0,0,0,.14);
+  --r:18px;--fw:1200px;
+  --fb:'DM Sans',-apple-system,sans-serif;
+  --fs:'DM Serif Display',Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;border-radius:var(--r)}
+a{color:inherit;text-decoration:none}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:200;padding:15px 32px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(24px) saturate(1.5);background:rgba(248,248,246,.9);border-bottom:1px solid rgba(0,0,0,.06);box-shadow:var(--s1)}
+.nav-logo{font-family:var(--fs);font-size:17px;font-weight:600}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:12px;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+
+/* Layout */
+.wrap{max-width:var(--fw);margin:0 auto;padding:0 40px}
+.sec{padding:100px 0}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.sec-title{font-family:var(--fs);font-size:clamp(2rem,4vw,2.8rem);font-weight:600;line-height:1.2;color:var(--text);margin-bottom:48px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s,background .2s;font-family:var(--fb)}
+.btn:active{transform:scale(.97)!important}
+.btn-p{background:var(--grad);color:var(--text);box-shadow:0 4px 20px rgba(168,213,194,.4)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(168,213,194,.5)}
+.btn-g{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
+.btn-g:hover{background:var(--text);color:var(--surface);transform:translateY(-2px)}
+
+/* Card base */
+.card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--s2);overflow:hidden}
+
+/* ── Section Perspective Tilt ── */
+.sec-wrap{perspective:1200px;perspective-origin:50% 60%}
+.sec-inner{
+  transform-origin:50% 100%;
+  transform:rotateX(18deg) translateY(30px);
+  opacity:0;
+  box-shadow:0 -4px 32px rgba(168,213,194,.18),0 -1px 0 rgba(255,255,255,.6),0 32px 80px rgba(0,0,0,.08);
+  border-radius:24px;
+  background:var(--bg);
+  transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .7s ease,box-shadow .9s ease;
+  will-change:transform,opacity;
+  position:relative;
+}
+.sec-inner.revealed{transform:rotateX(0deg) translateY(0);opacity:1;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.sec-inner::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 40%,rgba(168,213,194,.6) 60%,transparent);border-radius:1px;opacity:1;transition:opacity .9s ease;pointer-events:none;z-index:1}
+.sec-inner.revealed::before{opacity:0}
+#hero .sec-inner{transform:none;opacity:1;box-shadow:none;border-radius:0;background:transparent}
+#hero .sec-inner::before{display:none}
+
+/* ── Merged Hero + About ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:center;padding:100px 40px 80px;max-width:var(--fw);margin:0 auto;position:relative}
+.hero-left{position:relative;z-index:1}
+.hero-name{font-family:var(--fs);font-size:clamp(2.8rem,6vw,5rem);font-weight:600;letter-spacing:-.02em;line-height:1.05;margin-bottom:20px;background:linear-gradient(135deg,#2d2d2b 0%,#5a8a7a 55%,#7a8fbf 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:13px;color:var(--muted);letter-spacing:.1em;margin-bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero-sub span::after{content:'·';margin-left:10px;color:var(--a1)}
+.hero-sub span:last-child::after{content:''}
+.hero-tag{font-size:clamp(.95rem,1.8vw,1.1rem);font-family:var(--fs);font-style:italic;color:var(--muted);margin-bottom:36px;max-width:480px}
+.hero-photo-wrap{position:relative;flex-shrink:0}
+.hero-photo-wrap img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r);box-shadow:var(--s3)}
+.about-badge{position:absolute;bottom:-14px;left:-14px;background:var(--surface);border-radius:14px;padding:12px 18px;box-shadow:var(--s3);border:1px solid var(--border);font-size:12px;font-weight:500}
+.badge-num{font-family:var(--fs);font-size:26px;font-weight:600;display:block;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+/* Decorative orbs */
+#hero::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,213,194,.22) 0%,transparent 70%);top:-80px;right:0;pointer-events:none;animation:orb1 8s ease-in-out infinite}
+#hero::after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(184,201,240,.18) 0%,transparent 70%);bottom:-40px;left:-60px;pointer-events:none;animation:orb2 10s ease-in-out infinite}
+@keyframes orb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,15px) scale(1.06)}}
+@keyframes orb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(15px,-10px) scale(1.04)}}
+
+/* Work Timeline */
+.work-layout{display:grid;grid-template-columns:260px 1fr;gap:0 72px;align-items:start}
+.timeline{position:relative;padding:10px 0;display:flex;flex-direction:column}
+.timeline::before{content:'';position:absolute;right:0;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--a1),var(--a2),var(--a3));border-radius:2px;z-index:0}
+.tl-node{position:relative;z-index:1;display:flex;flex-direction:row;align-items:center;cursor:pointer;margin-bottom:120px;width:100%}
+.tl-node:last-child{margin-bottom:0}
+.tl-period{flex:1;min-width:0;font-size:11px;font-weight:500;color:var(--muted);text-align:right;line-height:1.5;letter-spacing:.01em;padding-right:16px;white-space:nowrap}
+.tl-dot{flex-shrink:0;position:relative;right:-9px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .25s ease,box-shadow .25s ease;z-index:2}
+.tl-dot-i{width:8px;height:8px;border-radius:50%}
+.d0{background:#e6f8f2;border:2px solid #5DCAA5}.d0 .tl-dot-i{background:linear-gradient(135deg,#5DCAA5,#1D9E75)}
+.d1{background:#e6f1fb;border:2px solid #85B7EB}.d1 .tl-dot-i{background:linear-gradient(135deg,#85B7EB,#378ADD)}
+.d2{background:#faeeda;border:2px solid #FAC775}.d2 .tl-dot-i{background:linear-gradient(135deg,#FAC775,#BA7517)}
+.tl-node:hover .tl-dot{transform:scale(1.5)}
+.tl-node:hover .d0{box-shadow:0 0 0 5px rgba(93,202,165,.2)}
+.tl-node:hover .d1{box-shadow:0 0 0 5px rgba(133,183,235,.2)}
+.tl-node:hover .d2{box-shadow:0 0 0 5px rgba(250,199,117,.22)}
+.wca{position:relative;min-height:0}
+.wc-hint{font-size:13px;color:var(--muted);padding:40px 0;display:flex;align-items:center;gap:8px}
+.wc-hint.hidden{display:none}
+.wc{position:absolute;inset:0;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--s2);padding:28px 32px;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .32s ease,transform .32s ease}
+.wc.vis{opacity:1;pointer-events:auto;transform:translateY(0);position:relative}
+.wc-co{font-family:var(--fs);font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.3}
+.wc-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.wc-role{font-size:13px;color:var(--muted);font-weight:400}
+.wc-badge{font-size:11px;font-weight:500;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:3px 11px;white-space:nowrap}
+.wc-div{height:1px;background:var(--border);margin-bottom:18px}
+.wc-desc{font-size:13.5px;color:#555;line-height:1.85;margin-bottom:20px}
+.wc-tags{display:flex;flex-wrap:wrap;gap:7px}
+.wt{font-size:11.5px;font-weight:500;padding:4px 12px;border-radius:7px;border:1px solid}
+.wt-t{background:#e6f8f2;color:#0F6E56;border-color:#9FE1CB}
+.wt-b{background:#e6f1fb;color:#185FA5;border-color:#B5D4F4}
+.wt-a{background:#faeeda;color:#854F0B;border-color:#FAC775}
+
+/* Edu */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.edu-card{padding:32px;height:100%;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease;cursor:default}
+.edu-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 0 0 1.5px rgba(168,213,194,.55),0 20px 56px rgba(0,0,0,.13),0 0 32px rgba(168,213,194,.18)}
+.edu-card h3{font-family:var(--fs);font-size:1.2rem;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.edu-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.edu-item:last-of-type{border-bottom:none}
+.edu-school{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;transition:font-size .3s ease}
+.edu-card:hover .edu-school{font-size:17.5px}
+.edu-deg{font-size:13.5px;color:var(--muted);line-height:1.65;transition:font-size .3s ease}
+.edu-card:hover .edu-deg{font-size:14.5px}
+.honors{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.h-tag{font-size:11px;font-weight:500;padding:4px 11px;border-radius:20px;background:rgba(168,213,194,.2);color:#4a8a72;border:1px solid rgba(168,213,194,.4)}
+.skill-cloud{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}
+.sk{font-size:12px;font-weight:500;padding:5px 13px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text);transition:all .2s;cursor:default}
+.sk:hover{background:var(--text);color:var(--surface);border-color:var(--text)}
+.lang-row{display:flex;gap:10px;flex-wrap:wrap}
+.lt{font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;color:var(--text)}
+.lt.zh{background:rgba(245,214,184,.4);border:1px solid rgba(245,214,184,.8)}
+.lt.de{background:rgba(184,201,240,.4);border:1px solid rgba(184,201,240,.8)}
+.lt.en{background:rgba(168,213,194,.4);border:1px solid rgba(168,213,194,.8)}
+
+/* Projects — Horizontal Parallax Stack */
+#projects{padding:100px 0}
+.proj-sticky-wrap{position:relative;height:260vh}
+.proj-sticky{position:sticky;top:80px;overflow:hidden;padding:0 40px}
+.proj-sticky-inner{max-width:var(--fw);margin:0 auto}
+.proj-header{margin-bottom:36px}
+.proj-track{position:relative;height:420px}
+.proj-card{position:absolute;top:0;width:360px;height:420px;border-radius:22px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--s3);overflow:hidden;display:flex;flex-direction:column;will-change:transform;transition:transform .65s cubic-bezier(.22,1,.36,1),box-shadow .3s ease,filter .65s ease}
+.proj-card:hover{box-shadow:0 24px 64px rgba(0,0,0,.16)}
+.proj-img{width:100%;height:200px;object-fit:cover;border-radius:0;flex-shrink:0}
+.proj-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.proj-name{font-family:var(--fs);font-size:1rem;font-weight:600;margin-bottom:9px;line-height:1.4}
+.proj-desc{font-size:12.5px;color:#666;line-height:1.7;flex:1;margin-bottom:14px}
+.proj-meta{display:flex;flex-direction:column;gap:6px}
+.proj-role{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.proj-stack{display:flex;flex-wrap:wrap;gap:5px}
+.stag{font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(184,201,240,.3);color:#4a5a8a;border:1px solid rgba(184,201,240,.5)}
+.proj-progress{display:flex;gap:8px;margin-top:20px}
+.proj-pip{width:24px;height:3px;border-radius:3px;background:var(--border);transition:background .3s,width .3s}
+.proj-pip.active{background:var(--a1);width:40px}
+
+/* Hobbies — 3D Tilt */
+.hobbies-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,190px);gap:14px}
+.hobby-card{position:relative;border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--s2);transform-style:preserve-3d;transition:box-shadow .3s ease;will-change:transform}
+.hobby-card-inner{position:absolute;inset:0;transform-style:preserve-3d}
+.hobby-card img{width:100%;height:100%;object-fit:cover;border-radius:0;transition:transform .4s ease}
+.hobby-card:hover img{transform:scale(1.04)}
+.hobby-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.62) 0%,transparent 55%);transition:background .3s}
+.hobby-card:hover .hobby-overlay{background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.08) 60%)}
+.hobby-shine{position:absolute;inset:0;border-radius:var(--r);background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.28) 0%,transparent 65%);opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:2}
+.hobby-card:hover .hobby-shine{opacity:1}
+.hobby-name{position:absolute;bottom:16px;left:18px;color:#fff;font-size:13px;font-weight:600;letter-spacing:.04em;display:flex;flex-direction:column;gap:2px;z-index:3;transform:translateZ(20px)}
+.hobby-sub{font-size:10px;font-weight:400;opacity:.8;letter-spacing:.06em}
+.hobby-hint{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);border-radius:20px;padding:3px 9px;font-size:10px;color:#fff;letter-spacing:.06em;opacity:0;transition:opacity .3s;z-index:3}
+.hobby-card:hover .hobby-hint{opacity:1}
+
+/* Contact */
+.contact-wrap{background:var(--text);color:var(--surface);border-radius:28px;padding:72px 56px;text-align:center;position:relative;overflow:hidden;margin:0 40px}
+.contact-wrap::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,213,194,.12) 0%,transparent 70%);top:-120px;right:-100px;pointer-events:none}
+.ct-title{font-family:var(--fs);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:14px;font-weight:600}
+.ct-sub{color:rgba(255,255,255,.6);margin-bottom:44px;font-size:14px}
+.ct-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-bottom:28px}
+.ct-link{display:flex;align-items:center;gap:10px;padding:11px 20px;border-radius:50px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-size:13px;font-weight:500;transition:all .2s;cursor:pointer;font-family:var(--fb)}
+.ct-link:hover{background:rgba(255,255,255,.16);color:#fff;transform:translateY(-2px)}
+.ct-link svg{flex-shrink:0}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--surface);padding:11px 22px;border-radius:50px;font-size:13px;font-weight:500;box-shadow:var(--s3);opacity:0;transition:all .3s ease;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Footer */
+.footer{text-align:center;padding:36px 32px;font-size:13px;color:var(--muted)}
+
+/* Modal */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);z-index:300;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
+.mo.active{opacity:1;pointer-events:all}
+.mo-box{background:var(--surface);border-radius:22px;max-width:580px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.28);transform:translateY(24px) scale(.96);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.mo.active .mo-box{transform:none}
+.mo-head{display:flex;justify-content:space-between;align-items:center;padding:26px 30px 0;margin-bottom:18px}
+.mo-title{font-family:var(--fs);font-size:1.3rem;font-weight:600}
+.mo-close{width:32px;height:32px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted);transition:background .2s,color .2s}
+.mo-close:hover{background:var(--text);color:var(--surface)}
+.mo-body{padding:0 30px 30px}
+.mo-img{width:100%;border-radius:13px;margin-bottom:18px;aspect-ratio:16/9;object-fit:cover}
+.mo-ph{background:linear-gradient(135deg,rgba(168,213,194,.2),rgba(184,201,240,.2));border:2px dashed var(--border);border-radius:13px;padding:32px;text-align:center;color:var(--muted);margin-bottom:14px;font-size:13.5px;line-height:1.6}
+.mo-ph .pi{font-size:32px;margin-bottom:10px;display:block}
+.mo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+.mo-row img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}
+.mo-text{font-size:13.5px;color:#555;line-height:1.8}
+
+/* Responsive */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}.about-img-wrap{max-width:440px;margin:0 auto}
+  .edu-grid{grid-template-columns:1fr}
+  .hobbies-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,200px)}
+  .proj-card{width:300px}.proj-card:nth-child(2){left:316px}.proj-card:nth-child(3){left:632px}
+}
+@media(max-width:640px){
+  .wrap{padding:0 18px}.sec{padding:60px 0}.nav-links{display:none}
+  .work-layout{grid-template-columns:1fr;gap:28px 0}
+  .hobbies-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,160px)}
+  .contact-wrap{padding:44px 22px;margin:0 16px;border-radius:18px}
+  .mo-row{grid-template-columns:repeat(2,1fr)}.mo-body{padding:0 18px 18px}.mo-head{padding:18px 18px 0}
+}
+#edu{background:var(--bg)}
+#projects{background:var(--surface)}
+#hobbies{background:var(--bg)}
+#contact{background:var(--bg)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
 </head>
-
 <body>
 
-<!-- ==================== Navbar ==================== -->
-<nav class="nav" id="mainNav">
+<nav class="nav">
   <div class="nav-logo">Anita Han</div>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#work">Experience</a></li>
-    <li><a href="#edu">Education</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#hobbies">Hobbies</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#hero">Home</a></li><li><a href="#work">Experience</a></li>
+    <li><a href="#projects">Projects</a></li><li><a href="#edu">Education</a></li>
+    <li><a href="#hobbies">Hobbies</a></li><li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ==================== 1. Hero ==================== -->
-<section class="hero" id="hero">
-  <!-- Profile photo placeholder: professional headshot style -->
-  <img
-    class="hero-avatar"
-    src="life.jpg"
-    alt="Anita Han profile photo"
-    loading="lazy"
-    data-aos="zoom-in"
-  />
-
-  <h1 class="hero-name" data-aos="fade-up" data-aos-delay="80">Hi there, I'm Anita</h1>
-
-  <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="160">
-    <span>After-Sales Technical Support</span>
-    <span>Project Management</span>
-    <span>German Interpreter</span>
-  </p>
-
-  <p class="hero-tagline" data-aos="fade-up" data-aos-delay="240">
-    Driving processes through data, bridging cultures through communication.
-  </p>
-
-  <a href="#work" class="btn btn-primary" data-aos="fade-up" data-aos-delay="320">
-    Explore My Experience
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
-</section>
-
-<!-- ==================== 2. About ==================== -->
-<section class="section" id="about">
-  <div class="container">
-    <p class="section-label" data-aos="fade-up">About Me</p>
-    <div class="about-grid">
-      <!-- Left: text -->
-      <div class="about-text" data-aos="fade-up" data-aos-delay="80">
-        <p>
-          I'm <strong>Anita</strong>, a generalist who thrives at the intersection of technology and the humanities.
-        </p>
-        <p>
-          At <strong>Mercedes-Benz After-Sales</strong>, I lead data analysis and quality feedback, cutting data processing time by <strong>80%</strong> through PowerBI automation. My Master's in German Interpretation from BFSU lets me bridge language and culture with precision in cross-border settings.
-        </p>
-        <p>
-          Outside of work I dance, snowboard, do crafts, travel, and work out — exploring the world with my body and hands.
-        </p>
-        <p>
-          I believe the best solutions come from <strong>cross-disciplinary thinking</strong>.
-        </p>
-
-        <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="#contact" class="btn btn-primary">Get in Touch</a>
-          <a href="#projects" class="btn btn-ghost">View Projects</a>
+<!-- Hero + About (merged) -->
+<section id="hero">
+  <div class="sec-wrap"><div class="sec-inner revealed">
+    <div class="hero">
+      <div class="hero-left">
+        <p class="hero-sub"><span>After-Sales Technical Support</span><span>Project Management</span><span>German Interpreter</span></p>
+        <h1 class="hero-name">Hi there,<br/>I'm Anita</h1>
+        <p class="hero-tag">Driving processes through data, bridging cultures through communication.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#work" class="btn btn-p">Explore My Experience
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-g">Get in Touch</a>
         </div>
       </div>
+      <div class="hero-photo-wrap">
+        <img src="https://picsum.photos/480/600?random=20" alt="Anita Han" loading="lazy"/>
+        <div class="about-badge"><span class="badge-num">3+</span>years of experience</div>
+      </div>
+    </div>
+  </div></div>
+</section>
 
-      <!-- Right: lifestyle photo placeholder -->
-      <div class="about-img-wrap" data-aos="fade-up" data-aos-delay="160">
-        <img
-          src="https://picsum.photos/480/600?random=20"
-          alt="Anita Han lifestyle photo"
-          loading="lazy"
-        />
-        <!-- Floating badge -->
-        <div class="about-badge">
-          <span class="badge-num">3+</span>
-          years of experience
+<!-- Work Experience -->
+<section class="sec" id="work" style="background:var(--bg)">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="wrap">
+      <p class="sec-label">Experience</p>
+      <h2 class="sec-title">Work Experience</h2>
+      <div class="work-layout">
+        <div class="timeline" id="workTimeline" onmouseleave="hideWC()">
+          <div class="tl-node" onmouseenter="showWC(0)">
+            <div class="tl-period">2022-08-01<br/>— Present</div>
+            <div class="tl-dot d0"><div class="tl-dot-i"></div></div>
+          </div>
+          <div class="tl-node" onmouseenter="showWC(1)">
+            <div class="tl-period">2022-01-01<br/>— 2022-05-31</div>
+            <div class="tl-dot d1"><div class="tl-dot-i"></div></div>
+          </div>
+          <div class="tl-node" onmouseenter="showWC(2)">
+            <div class="tl-period">2021-04-01<br/>— 2021-09-30</div>
+            <div class="tl-dot d2"><div class="tl-dot-i"></div></div>
+          </div>
+        </div>
+        <div class="wca" id="wca">
+          <div class="wc-hint" id="wc-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 15l6 6M9 11a6 6 0 1 0 12 0 6 6 0 0 0-12 0"/></svg>
+            Hover a dot to explore
+          </div>
+          <div class="wc" id="wc0">
+            <div class="wc-co">Beijing Mercedes-Benz Sales Service Co., Ltd.</div>
+            <div class="wc-meta"><span class="wc-role">After-Sales / VPC Technical Support</span><span class="wc-badge">2022-08-01 — Present</span></div>
+            <div class="wc-div"></div>
+            <p class="wc-desc">Reduced KPI report generation time by 80% through data analysis and PowerBI automation; led multiple cross-departmental projects end-to-end — from feasibility assessment to contract sign-off — ensuring smooth system rollouts.</p>
+            <div class="wc-tags"><span class="wt wt-t">Quality Analysis</span><span class="wt wt-t">8D Reporting</span><span class="wt wt-t">Project Management</span><span class="wt wt-t">Cross-dept. Coordination</span><span class="wt wt-t">Process Optimization</span><span class="wt wt-t">PowerBI Automation</span></div>
+          </div>
+          <div class="wc" id="wc1">
+            <div class="wc-co">DiDi International</div>
+            <div class="wc-meta"><span class="wc-role">Product Operations Intern</span><span class="wc-badge">2022-01-01 — 2022-05-31</span></div>
+            <div class="wc-div"></div>
+            <p class="wc-desc">Managed operations for the international online management platform, leveraging data analysis to drive product iteration and collaborating with payment and pricing teams to ensure on-time delivery.</p>
+            <div class="wc-tags"><span class="wt wt-b">Product Operations</span><span class="wt wt-b">Data Analysis</span><span class="wt wt-b">Cross-team Collaboration</span><span class="wt wt-b">Requirement Iteration</span></div>
+          </div>
+          <div class="wc" id="wc2">
+            <div class="wc-co">Bayer Environmental Science</div>
+            <div class="wc-meta"><span class="wc-role">Marketing Intern</span><span class="wc-badge">2021-04-01 — 2021-09-30</span></div>
+            <div class="wc-div"></div>
+            <p class="wc-desc">Independently managed WeChat community channels, growing followers by 1,000+; led 6+ marketing campaigns that brought in nearly 200 new users, handling all copywriting and poster design.</p>
+            <div class="wc-tags"><span class="wt wt-a">Community Management</span><span class="wt wt-a">User Growth</span><span class="wt wt-a">Campaign Planning</span><span class="wt wt-a">Content Creation</span></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ==================== 3. Work Experience ==================== -->
-<section class="section" id="work" style="background: var(--bg);">
-  <div class="container">
-    <p class="section-label" data-aos="fade-up">Experience</p>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="80">Work Experience</h2>
-
-    <div class="work-layout" data-aos="fade-up" data-aos-delay="120">
-
-      <!-- Left: vertical timeline dots -->
-      <div class="timeline" id="workTimeline" onmouseleave="hideWorkCard()">
-
-        <!-- Dot 0: Mercedes-Benz -->
-        <div class="timeline-node" data-idx="0"
-             onmouseenter="showWorkCard(0)">
-          <div class="tl-dot tl-dot-0">
-            <div class="tl-dot-inner"></div>
-          </div>
-          <div class="tl-period">Aug 2022<br/>– Present</div>
+<!-- Projects — Sticky Horizontal Stack -->
+<section id="projects">
+  <div class="proj-sticky-wrap" id="projWrap">
+    <div class="proj-sticky">
+      <div class="proj-sticky-inner">
+        <div class="proj-header">
+          <p class="sec-label">Featured Projects</p>
+          <h2 class="sec-title" style="margin-bottom:0">Featured Projects</h2>
         </div>
-
-        <!-- Dot 1: DiDi -->
-        <div class="timeline-node" data-idx="1"
-             onmouseenter="showWorkCard(1)">
-          <div class="tl-dot tl-dot-1">
-            <div class="tl-dot-inner"></div>
+        <div class="proj-track" id="projTrack">
+          <div class="proj-card" id="pc0">
+            <img class="proj-img" src="https://picsum.photos/400/225?random=30" alt="" loading="lazy"/>
+            <div class="proj-body">
+              <h3 class="proj-name">After-Sales Data Automation System</h3>
+              <p class="proj-desc">Designed a PowerBI automation template to replace manual KPI reporting, cutting report generation time from <strong>2 days to 2 hours</strong>.</p>
+              <div class="proj-meta"><span class="proj-role">Project Lead & Designer</span><div class="proj-stack"><span class="stag">PowerBI</span><span class="stag">Excel</span><span class="stag">SQL</span></div></div>
+            </div>
           </div>
-          <div class="tl-period">Jan 2022<br/>– May 2022</div>
-        </div>
-
-        <!-- Dot 2: Bayer -->
-        <div class="timeline-node" data-idx="2"
-             onmouseenter="showWorkCard(2)">
-          <div class="tl-dot tl-dot-2">
-            <div class="tl-dot-inner"></div>
+          <div class="proj-card" id="pc1">
+            <img class="proj-img" src="https://picsum.photos/400/225?random=31" alt="" loading="lazy"/>
+            <div class="proj-body">
+              <h3 class="proj-name">New System Launch Process Redesign</h3>
+              <p class="proj-desc">As HQ system launch coordinator, led business impact assessment and redesigned end-to-end workflow, achieving <strong>95% user satisfaction</strong>.</p>
+              <div class="proj-meta"><span class="proj-role">HQ System Launch Coordinator</span><div class="proj-stack"><span class="stag">Cross-dept. Coordination</span><span class="stag">Process Design</span><span class="stag">Change Management</span></div></div>
+            </div>
           </div>
-          <div class="tl-period">Apr 2021<br/>– Sep 2021</div>
-        </div>
-
-      </div><!-- /.timeline -->
-
-      <!-- Right: detail cards (hover a dot to reveal) -->
-      <div class="work-card-area" id="workCardArea">
-
-        <!-- Hint shown when nothing is hovered -->
-        <div class="work-card-hint" id="workHint">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 15l6 6M9 11a6 6 0 1 0 12 0 6 6 0 0 0-12 0"/></svg>
-          Hover a dot to explore
-        </div>
-
-        <!-- Card 0: Mercedes-Benz -->
-        <div class="work-card" id="wc-0">
-          <div class="wc-company">Beijing Mercedes-Benz Sales Service Co., Ltd.</div>
-          <div class="wc-meta">
-            <span class="wc-role">After-Sales / VPC Technical Support</span>
-            <span class="wc-period-badge">Aug 2022 – Present</span>
-          </div>
-          <div class="wc-divider"></div>
-          <p class="wc-desc">Reduced KPI report generation time by 80% through data analysis and PowerBI automation; led multiple cross-departmental projects end-to-end — from feasibility assessment to contract sign-off — ensuring smooth system rollouts.</p>
-          <div class="wc-tags">
-            <span class="wc-tag wc-tag-teal">Quality Analysis</span>
-            <span class="wc-tag wc-tag-teal">8D Reporting</span>
-            <span class="wc-tag wc-tag-teal">Project Management</span>
-            <span class="wc-tag wc-tag-teal">Cross-dept. Coordination</span>
-            <span class="wc-tag wc-tag-teal">Process Optimization</span>
-            <span class="wc-tag wc-tag-teal">PowerBI Automation</span>
-          </div>
-        </div>
-
-        <!-- Card 1: DiDi -->
-        <div class="work-card" id="wc-1">
-          <div class="wc-company">DiDi International</div>
-          <div class="wc-meta">
-            <span class="wc-role">Product Operations Intern</span>
-            <span class="wc-period-badge">Jan 2022 – May 2022</span>
-          </div>
-          <div class="wc-divider"></div>
-          <p class="wc-desc">Managed operations for the international online management platform, leveraging data analysis to drive product iteration and collaborating with payment and pricing teams to ensure on-time delivery.</p>
-          <div class="wc-tags">
-            <span class="wc-tag wc-tag-blue">Product Operations</span>
-            <span class="wc-tag wc-tag-blue">Data Analysis</span>
-            <span class="wc-tag wc-tag-blue">Cross-team Collaboration</span>
-            <span class="wc-tag wc-tag-blue">Requirement Iteration</span>
-          </div>
-        </div>
-
-        <!-- Card 2: Bayer -->
-        <div class="work-card" id="wc-2">
-          <div class="wc-company">Bayer Environmental Science</div>
-          <div class="wc-meta">
-            <span class="wc-role">Marketing Intern</span>
-            <span class="wc-period-badge">Apr 2021 – Sep 2021</span>
-          </div>
-          <div class="wc-divider"></div>
-          <p class="wc-desc">Independently managed WeChat community channels, growing followers by 1,000+; led 6+ marketing campaigns that brought in nearly 200 new users, handling all copywriting and poster design.</p>
-          <div class="wc-tags">
-            <span class="wc-tag wc-tag-amber">Community Management</span>
-            <span class="wc-tag wc-tag-amber">User Growth</span>
-            <span class="wc-tag wc-tag-amber">Campaign Planning</span>
-            <span class="wc-tag wc-tag-amber">Content Creation</span>
-          </div>
-        </div>
-
-      </div><!-- /.work-card-area -->
-    </div><!-- /.work-layout -->
-  </div>
-</section>
-
-<!-- ==================== 4. Education & Skills ==================== -->
-<section class="section" id="edu">
-  <div class="container">
-    <p class="section-label" data-aos="fade-up">Education & Skills</p>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="80">Education & Skills</h2>
-
-    <div class="edu-skills-grid">
-
-      <!-- Education card -->
-      <div class="card edu-skills-card" data-aos="fade-up" data-aos-delay="100">
-        <h3>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8d5c2" stroke-width="2" stroke-linecap="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3.33 1.67 8.67 1.67 12 0v-5"/>
-          </svg>
-          Education
-        </h3>
-
-        <div class="edu-item">
-          <div class="edu-school">Beijing Foreign Studies University</div>
-          <div class="edu-degree">
-            German Interpretation · Master's (2020 – 2022)<br/>
-            German Language & Literature · Bachelor's (2016 – 2020)<br/>
-            <span style="color: var(--muted)">Exchange student — University of Passau, Germany (2018 – 2019)</span>
-          </div>
-        </div>
-
-        <div style="margin-top: 8px;">
-          <p style="font-size:12px; font-weight:600; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;">Honors & Scholarships</p>
-          <div class="edu-honors">
-            <span class="honor-tag">🏆 National Scholarship</span>
-            <span class="honor-tag">🌏 CSC State Scholarship</span>
-            <span class="honor-tag">🎓 Beijing Outstanding Graduate</span>
-            <span class="honor-tag">⭐ Outstanding Student Leader</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Skills card -->
-      <div class="card edu-skills-card" data-aos="fade-up" data-aos-delay="180">
-        <h3>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b8c9f0" stroke-width="2" stroke-linecap="round">
-            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-          </svg>
-          Skills & Languages
-        </h3>
-
-        <p style="font-size:12px; font-weight:600; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px;">Professional Skills</p>
-        <div class="skill-cloud">
-          <span class="skill-tag">Data Analysis</span>
-          <span class="skill-tag">Excel</span>
-          <span class="skill-tag">PowerBI</span>
-          <span class="skill-tag">Project Management</span>
-          <span class="skill-tag">Cross-dept. Collaboration</span>
-          <span class="skill-tag">Process Optimization</span>
-          <span class="skill-tag">German Interpretation</span>
-          <span class="skill-tag">Cross-cultural Communication</span>
-        </div>
-
-        <p style="font-size:12px; font-weight:600; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin: 20px 0 12px;">Languages</p>
-        <div class="lang-grid">
-          <span class="lang-tag zh">Mandarin (Native)</span>
-          <span class="lang-tag de">German (C2)</span>
-          <span class="lang-tag en">English (C2)</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 5. Featured Projects ==================== -->
-<section class="section" id="projects">
-  <div class="container">
-    <p class="section-label" data-aos="fade-up">Featured Projects</p>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="80">Featured Projects</h2>
-
-    <div class="projects-grid">
-
-      <!-- Project 1 -->
-      <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
-        <!-- Placeholder: PowerBI dashboard -->
-        <img class="project-img" src="https://picsum.photos/400/225?random=30" alt="PowerBI dashboard project cover" loading="lazy" />
-        <div class="project-body">
-          <h3 class="project-name">After-Sales Data Automation System</h3>
-          <p class="project-desc">
-            Designed a PowerBI automation template to replace manual KPI reporting, cutting report generation time from <strong>2 days to 2 hours</strong>.
-          </p>
-          <div class="project-meta">
-            <span class="project-role">Project Lead & Designer</span>
-            <div class="project-stack">
-              <span class="stack-tag">PowerBI</span>
-              <span class="stack-tag">Excel</span>
-              <span class="stack-tag">SQL</span>
+          <div class="proj-card" id="pc2">
+            <img class="proj-img" src="https://picsum.photos/400/225?random=32" alt="" loading="lazy"/>
+            <div class="proj-body">
+              <h3 class="proj-name">Technical Exchange Program — Full Lifecycle</h3>
+              <p class="proj-desc">Built a technical exchange program from scratch: feasibility study, cross-functional alignment across finance, legal, and tax, contract signing, and on-site execution.</p>
+              <div class="proj-meta"><span class="proj-role">Project Lead</span><div class="proj-stack"><span class="stag">Cross-dept. Communication</span><span class="stag">Project Management</span></div></div>
             </div>
           </div>
         </div>
+        <div class="proj-progress" id="projProgress">
+          <div class="proj-pip active"></div>
+          <div class="proj-pip"></div>
+          <div class="proj-pip"></div>
+        </div>
       </div>
+    </div>
+  </div>
+</section>
 
-      <!-- Project 2 -->
-      <div class="card project-card" data-aos="fade-up" data-aos-delay="180">
-        <!-- Placeholder: process flow / meeting -->
-        <img class="project-img" src="https://picsum.photos/400/225?random=31" alt="System launch process optimization project cover" loading="lazy" />
-        <div class="project-body">
-          <h3 class="project-name">New System Launch Process Redesign</h3>
-          <p class="project-desc">
-            As HQ system launch coordinator, led business impact assessment and redesigned the end-to-end workflow, achieving <strong>95% user satisfaction</strong>.
-          </p>
-          <div class="project-meta">
-            <span class="project-role">HQ System Launch Coordinator</span>
-            <div class="project-stack">
-              <span class="stack-tag">Cross-dept. Coordination</span>
-              <span class="stack-tag">Process Design</span>
-              <span class="stack-tag">Change Management</span>
-            </div>
+<!-- Education & Skills -->
+<section class="sec" id="edu">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="wrap">
+      <p class="sec-label">Education & Skills</p>
+      <h2 class="sec-title">Education & Skills</h2>
+      <div class="edu-grid">
+        <div class="card edu-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a8d5c2" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3.33 1.67 8.67 1.67 12 0v-5"/></svg>Education</h3>
+          <div class="edu-item">
+            <div class="edu-school">Beijing Foreign Studies University</div>
+            <div class="edu-deg">German Interpretation · Master's (2020–2022)<br/>German Language & Literature · Bachelor's (2016–2020)<br/><span style="color:var(--muted)">Exchange student — University of Passau, Germany (2018–2019)</span></div>
+          </div>
+          <div style="margin-top:8px">
+            <p style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Honors & Scholarships</p>
+            <div class="honors"><span class="h-tag">🏆 National Scholarship</span><span class="h-tag">🌏 CSC State Scholarship</span><span class="h-tag">🎓 Beijing Outstanding Graduate</span><span class="h-tag">⭐ Outstanding Student Leader</span></div>
           </div>
         </div>
-      </div>
-
-      <!-- Project 3 -->
-      <div class="card project-card" data-aos="fade-up" data-aos-delay="260">
-        <!-- Placeholder: exchange event -->
-        <img class="project-img" src="https://picsum.photos/400/225?random=32" alt="Technical exchange project cover" loading="lazy" />
-        <div class="project-body">
-          <h3 class="project-name">Technical Exchange Program — Full Lifecycle</h3>
-          <p class="project-desc">
-            Built a technical exchange program from scratch: feasibility study, cross-functional alignment across finance, legal, and tax, contract signing, and on-site execution.
-          </p>
-          <div class="project-meta">
-            <span class="project-role">Project Lead</span>
-            <div class="project-stack">
-              <span class="stack-tag">Cross-dept. Communication</span>
-              <span class="stack-tag">Project Management</span>
-            </div>
-          </div>
+        <div class="card edu-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b8c9f0" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Skills & Languages</h3>
+          <p style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px">Professional Skills</p>
+          <div class="skill-cloud"><span class="sk">Data Analysis</span><span class="sk">Excel</span><span class="sk">PowerBI</span><span class="sk">Project Management</span><span class="sk">Cross-dept. Collaboration</span><span class="sk">Process Optimization</span><span class="sk">German Interpretation</span><span class="sk">Cross-cultural Communication</span></div>
+          <p style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:18px 0 11px">Languages</p>
+          <div class="lang-row"><span class="lt zh">Mandarin (Native)</span><span class="lt de">German (C2)</span><span class="lt en">English (C2)</span></div>
         </div>
       </div>
-
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ==================== 6. Hobbies ==================== -->
-<section class="section" id="hobbies">
-  <div class="container">
-    <p class="section-label" data-aos="fade-up">Hobbies</p>
-    <h2 class="section-title" data-aos="fade-up" data-aos-delay="80">Hobbies & Interests</h2>
-
-    <div class="hobbies-grid" data-aos="fade-up" data-aos-delay="120">
-
-      <!-- Dance -->
-      <div class="hobby-card" onclick="openModal('dance')">
-        <img src="https://picsum.photos/400/400?random=40" alt="Dance photo" loading="lazy" />
-        <div class="hobby-overlay"></div>
-        <div class="hobby-name">Dance<span class="hobby-sub">Jazz</span></div>
-        <span class="hobby-click-hint">View more</span>
+<!-- Hobbies — 3D Tilt -->
+<section class="sec" id="hobbies">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="wrap">
+      <p class="sec-label">Hobbies</p>
+      <h2 class="sec-title">Hobbies & Interests</h2>
+      <div class="hobbies-grid" id="hobbiesGrid">
+        <div class="hobby-card" onclick="openMo('dance')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=40" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Dance<span class="hobby-sub">Jazz</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('ski')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=41" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Snowboard<span class="hobby-sub">Freestyle</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('craft')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=42" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Crafts<span class="hobby-sub">Pottery</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('travel')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=43" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Travel<span class="hobby-sub">Wanderlust</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('fitness')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=44" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Fitness<span class="hobby-sub">Consistency</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('more')" style="overflow:hidden"><div class="hobby-card-inner" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr"><img src="https://picsum.photos/200/200?random=45" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/><img src="https://picsum.photos/200/200?random=46" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/><img src="https://picsum.photos/200/200?random=47" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/><img src="https://picsum.photos/200/200?random=48" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/></div><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">More Moments<span class="hobby-sub">Life in Frames</span></div><span class="hobby-hint">View more</span></div>
       </div>
-
-      <!-- Snowboard -->
-      <div class="hobby-card" onclick="openModal('ski')">
-        <img src="https://picsum.photos/400/400?random=41" alt="Snowboard photo" loading="lazy" />
-        <div class="hobby-overlay"></div>
-        <div class="hobby-name">Snowboard<span class="hobby-sub">Freestyle</span></div>
-        <span class="hobby-click-hint">View more</span>
-      </div>
-
-      <!-- Crafts -->
-      <div class="hobby-card" onclick="openModal('craft')">
-        <img src="https://picsum.photos/400/400?random=42" alt="Handcraft close-up" loading="lazy" />
-        <div class="hobby-overlay"></div>
-        <div class="hobby-name">Crafts<span class="hobby-sub">Pottery</span></div>
-        <span class="hobby-click-hint">View more</span>
-      </div>
-
-      <!-- Travel -->
-      <div class="hobby-card" onclick="openModal('travel')">
-        <img src="https://picsum.photos/400/400?random=43" alt="Travel landscape" loading="lazy" />
-        <div class="hobby-overlay"></div>
-        <div class="hobby-name">Travel<span class="hobby-sub">Wanderlust</span></div>
-        <span class="hobby-click-hint">View more</span>
-      </div>
-
-      <!-- Fitness -->
-      <div class="hobby-card" onclick="openModal('fitness')">
-        <img src="https://picsum.photos/400/400?random=44" alt="Fitness photo" loading="lazy" />
-        <div class="hobby-overlay"></div>
-        <div class="hobby-name">Fitness<span class="hobby-sub">Consistency</span></div>
-        <span class="hobby-click-hint">View more</span>
-      </div>
-
-      <!-- More moments (collage) -->
-      <div class="hobby-card" onclick="openModal('more')" style="position:relative; overflow:hidden;">
-        <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; height:100%;">
-          <img src="https://picsum.photos/200/200?random=45" alt="Moment 1" loading="lazy" style="border-radius:0; width:100%; height:100%; object-fit:cover;" />
-          <img src="https://picsum.photos/200/200?random=46" alt="Moment 2" loading="lazy" style="border-radius:0; width:100%; height:100%; object-fit:cover;" />
-          <img src="https://picsum.photos/200/200?random=47" alt="Moment 3" loading="lazy" style="border-radius:0; width:100%; height:100%; object-fit:cover;" />
-          <img src="https://picsum.photos/200/200?random=48" alt="Moment 4" loading="lazy" style="border-radius:0; width:100%; height:100%; object-fit:cover;" />
-        </div>
-        <div class="hobby-overlay"></div>
-        <div class="hobby-name">More Moments<span class="hobby-sub">Life in Frames</span></div>
-        <span class="hobby-click-hint">View more</span>
-      </div>
-
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ==================== 7. Contact ==================== -->
-<section class="section" id="contact">
-  <div class="contact-section" data-aos="fade-up">
-    <p class="section-label" style="color: rgba(255,255,255,0.4);">Get In Touch</p>
-    <h2 class="contact-title">Let's Talk</h2>
-    <p class="contact-sub">Open to collaboration, interesting problems, or simply a good conversation 👋</p>
-
-    <div class="contact-links">
-      <!-- Email (anti-scraping display) -->
-      <button class="contact-link" onclick="copyEmail()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <rect x="2" y="4" width="20" height="16" rx="2"/>
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-        </svg>
-        anita.han[at]email.com · Copy Email
-      </button>
-
-      <!-- LinkedIn -->
-      <a class="contact-link" href="https://linkedin.com/in/anita-han" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-          <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-        </svg>
-        LinkedIn
-      </a>
-
-      <!-- Xiaohongshu (placeholder) -->
-      <a class="contact-link" href="#" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <rect x="3" y="3" width="18" height="18" rx="4"/>
-          <path d="M9 9h6M9 12h6M9 15h4"/>
-        </svg>
-        Xiaohongshu
-      </a>
+<!-- Contact -->
+<section class="sec" id="contact">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="contact-wrap">
+      <p class="sec-label" style="color:rgba(255,255,255,.4)">Get In Touch</p>
+      <h2 class="ct-title">Let's Talk</h2>
+      <p class="ct-sub">Open to collaboration, interesting problems, or simply a good conversation 👋</p>
+      <div class="ct-links">
+        <button class="ct-link" onclick="copyEmail()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>anita.han[at]email.com · Copy Email</button>
+        <a class="ct-link" href="https://linkedin.com/in/anita-han" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+        <a class="ct-link" href="#" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>Xiaohongshu</a>
+      </div>
     </div>
-
-  </div>
+  </div></div>
 </section>
 
-<!-- ==================== Footer ==================== -->
-<footer class="footer">
-  <p>© 2026 Anita Han · Made with ☕ and Vibe Coding</p>
-</footer>
-
-<!-- ==================== Toast ==================== -->
+<footer class="footer"><p>© 2026 Anita Han · Made with ☕ and Vibe Coding</p></footer>
 <div class="toast" id="toast">✓ Email copied to clipboard</div>
 
-<!-- ==================== Modal ==================== -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
-  <div class="modal" id="modal">
-    <div class="modal-header">
-      <h2 class="modal-title" id="modalTitle"></h2>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
+<div class="mo" id="mo" onclick="closeMoBg(event)">
+  <div class="mo-box">
+    <div class="mo-head"><h2 class="mo-title" id="moTitle"></h2><button class="mo-close" onclick="closeMo()">✕</button></div>
+    <div class="mo-body" id="moBody"></div>
   </div>
 </div>
 
-<!-- ==================== AOS ==================== -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
 <script>
-  /* AOS init */
-  AOS.init({
-    duration: 700,
-    easing: 'ease-out-cubic',
-    once: true,
-    offset: 60,
+/* 1. Section perspective tilt */
+const secInners=document.querySelectorAll('.sec-inner:not(.revealed)');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>0.08){e.target.classList.add('revealed');obs.unobserve(e.target);}});},{threshold:[0.08,0.2,0.4]});
+secInners.forEach(el=>obs.observe(el));
+
+/* 2. Projects — fan-out: card1 centre → left, card2 enters centre, card3 enters right */
+const projWrap=document.getElementById('projWrap');
+const projCards=[document.getElementById('pc0'),document.getElementById('pc1'),document.getElementById('pc2')];
+const projPips=document.querySelectorAll('.proj-pip');
+const CW=360, GAP=20;
+
+function easeIO(t){return t<.5?2*t*t:-1+(4-2*t)*t}
+
+function updateProj(){
+  const rect=projWrap.getBoundingClientRect();
+  const wrapH=projWrap.offsetHeight;
+  const viewH=window.innerHeight;
+  const progress=Math.max(0,Math.min(1,-rect.top/(wrapH-viewH)));
+
+  // Track inner width (sticky panel minus padding)
+  const trackW=projWrap.offsetWidth - 80;
+
+  // Final resting positions when all 3 are on screen:
+  // [left=0, centre=CW+GAP, right=(CW+GAP)*2] but shifted so the group is centred in trackW
+  const totalW = CW*3 + GAP*2;
+  const groupLeft = Math.max(0, (trackW - totalW) / 2);
+  const finalX = [groupLeft, groupLeft + CW + GAP, groupLeft + (CW+GAP)*2];
+
+  // Starting position: card0 centred alone
+  const startX0 = Math.max(0, (trackW - CW) / 2);
+  // Cards 1 and 2 start off-screen right
+  const offRight = trackW + 60;
+
+  // Phase 1 (progress 0→0.5): card1 slides in from right, card0 slides left to finalX[0]
+  const t1 = Math.max(0, Math.min(1, progress / 0.5));
+  // Phase 2 (progress 0.5→1): card2 slides in from right, card1 slides left to finalX[1]
+  const t2 = Math.max(0, Math.min(1, (progress - 0.5) / 0.5));
+
+  const e1=easeIO(t1), e2=easeIO(t2);
+
+  // card0: starts at startX0, moves to finalX[0] during phase1, stays there
+  const x0 = startX0 + (finalX[0] - startX0) * e1;
+
+  // card1: starts offRight, moves to finalX[1] (its centre resting spot) during phase1,
+  //        then nudges left to finalX[1]→finalX[1] (already there) — no further move needed
+  //        Actually card1 enters to centre=(startX0 during phase1) then shuffles left in phase2
+  const centreX = startX0; // where card1 initially lands (same as card0's start)
+  const x1_phase1 = offRight + (centreX - offRight) * e1;       // enters to centre
+  const x1_phase2 = centreX + (finalX[1] - centreX) * e2;       // nudges to final
+  const x1 = t1 < 1 ? x1_phase1 : x1_phase2;
+
+  // card2: starts offRight, slides in to finalX[2] during phase2
+  const x2 = offRight + (finalX[2] - offRight) * e2;
+
+  projCards[0].style.transform=`translateX(${x0}px)`;
+  projCards[0].style.zIndex=3;
+  projCards[1].style.transform=`translateX(${x1}px)`;
+  projCards[1].style.zIndex=e1>0?4:1;
+  projCards[2].style.transform=`translateX(${x2}px)`;
+  projCards[2].style.zIndex=e2>0?5:1;
+
+  const activeCard=e2>0.5?2:e1>0.5?1:0;
+  projPips.forEach((pip,i)=>pip.classList.toggle('active',i===activeCard));
+}
+window.addEventListener('scroll',updateProj,{passive:true});
+window.addEventListener('load',updateProj);
+updateProj();
+
+/* 3. Hobby 3D tilt */
+document.querySelectorAll('.hobby-card').forEach(card=>{
+  const shine=card.querySelector('.hobby-shine');
+  let raf=null,cRX=0,cRY=0,tRX=0,tRY=0,animating=false;
+  function lerp(a,b,t){return a+(b-a)*t}
+  function animate(){
+    cRX=lerp(cRX,tRX,.1);cRY=lerp(cRY,tRY,.1);
+    card.style.transform=`perspective(700px) rotateX(${cRX}deg) rotateY(${cRY}deg) scale3d(1.02,1.02,1.02)`;
+    card.style.boxShadow=`0 ${20+Math.abs(cRX)}px ${48+Math.abs(cRX)*2}px rgba(0,0,0,.18)`;
+    if(Math.abs(cRX-tRX)>0.02||Math.abs(cRY-tRY)>0.02){raf=requestAnimationFrame(animate);}
+    else{animating=false;}
+  }
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    tRX=(0.5-y)*14;tRY=(x-0.5)*16;
+    if(shine)shine.style.background=`radial-gradient(circle at ${x*100}% ${y*100}%,rgba(255,255,255,.32) 0%,transparent 60%)`;
+    if(!animating){animating=true;raf=requestAnimationFrame(animate);}
   });
-
-  /* Work timeline: hover to show card, leave to hide */
-  let currentWork = -1;
-
-  function showWorkCard(idx) {
-    // Hide hint
-    document.getElementById('workHint').classList.add('hidden');
-
-    const nodes = document.querySelectorAll('.timeline-node');
-
-    if (idx === currentWork) return;
-
-    // Deactivate previous node & card
-    if (currentWork >= 0) {
-      nodes[currentWork].classList.remove('active');
-      const oldCard = document.getElementById('wc-' + currentWork);
-      oldCard.classList.remove('visible');
-      oldCard.style.position = 'absolute';
-    }
-
-    nodes[idx].classList.add('active');
-    currentWork = idx;
-
-    const newCard = document.getElementById('wc-' + idx);
-    requestAnimationFrame(() => {
-      newCard.classList.add('visible');
-      newCard.style.position = '';
-    });
-  }
-
-  function hideWorkCard() {
-    if (currentWork < 0) return;
-    const nodes = document.querySelectorAll('.timeline-node');
-    nodes[currentWork].classList.remove('active');
-    const card = document.getElementById('wc-' + currentWork);
-    card.classList.remove('visible');
-    currentWork = -1;
-    document.getElementById('workHint').classList.remove('hidden');
-  }
-
-  /* Navbar scroll shadow */
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 30);
+  card.addEventListener('mouseleave',()=>{
+    tRX=0;tRY=0;
+    card.style.transition='transform .6s cubic-bezier(.22,1,.36,1),box-shadow .6s ease';
+    card.style.transform='perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+    card.style.boxShadow='';
+    setTimeout(()=>{card.style.transition='';},650);
+    cancelAnimationFrame(raf);animating=false;
   });
+});
 
-  /* Copy email */
-  function copyEmail() {
-    const email = 'anita.han@email.com';
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(email).then(showToast);
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = email;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast();
-    }
-  }
+/* Work cards */
+let curW=-1;
+function showWC(i){
+  document.getElementById('wc-hint').classList.add('hidden');
+  const nodes=document.querySelectorAll('.tl-node');
+  if(i===curW)return;
+  if(curW>=0){nodes[curW].classList.remove('active');const old=document.getElementById('wc'+curW);old.classList.remove('vis');old.style.position='absolute';}
+  nodes[i].classList.add('active');curW=i;
+  const next=document.getElementById('wc'+i);
+  requestAnimationFrame(()=>{next.classList.add('vis');next.style.position='';});
+}
+function hideWC(){
+  if(curW<0)return;
+  document.querySelectorAll('.tl-node')[curW].classList.remove('active');
+  document.getElementById('wc'+curW).classList.remove('vis');
+  curW=-1;document.getElementById('wc-hint').classList.remove('hidden');
+}
 
-  function showToast() {
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
+/* Copy email */
+function copyEmail(){
+  const e='anita.han@email.com';
+  navigator.clipboard?navigator.clipboard.writeText(e).then(showToast):((()=>{const t=document.createElement('textarea');t.value=e;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast();})());
+}
+function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
-  /* Modal data */
-  const modalData = {
-    dance: {
-      title: 'Dance · Jazz',
-      html: `
-        <div class="modal-placeholder">
-          <span class="placeholder-icon">🎬</span>
-          Dance video goes here<br/>
-          <small style="opacity:.7">(replace with actual video link)</small>
-        </div>
-        <img class="modal-img" src="https://picsum.photos/560/315?random=50" alt="Dance photo" loading="lazy" />
-        <p class="modal-text">Jazz dance is how I decompress — the moment the music starts, every ounce of tension dissolves into the rhythm. I take weekly classes and love the physical connection it creates with movement.</p>
-      `
-    },
-    ski: {
-      title: 'Snowboard · Freestyle',
-      html: `
-        <div class="modal-img-row">
-          <img src="https://picsum.photos/200/200?random=51" alt="Snowboard photo 1" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=52" alt="Snowboard photo 2" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=53" alt="Snowboard photo 3" loading="lazy" />
-        </div>
-        <p class="modal-text">Snowboarding got me hooked on speed and balance. Going from shaky beginner to carving down a slope was one of the most satisfying progressions of my life. Nothing beats fresh powder and an endless white horizon from the summit.</p>
-      `
-    },
-    craft: {
-      title: 'Crafts · Pottery',
-      html: `
-        <img class="modal-img" src="https://picsum.photos/560/315?random=54" alt="Craft work" loading="lazy" />
-        <div class="modal-img-row" style="grid-template-columns:1fr 1fr; margin-top:12px;">
-          <img src="https://picsum.photos/280/280?random=55" alt="Pottery detail 1" loading="lazy" />
-          <img src="https://picsum.photos/280/280?random=56" alt="Pottery detail 2" loading="lazy" />
-        </div>
-        <p class="modal-text" style="margin-top:16px;">Pottery was the first time I truly understood what "being present" means. When your hands are shaping clay, there is simply no room for distraction. Every piece has its own personality — even the lopsided ones are one-of-a-kind.</p>
-      `
-    },
-    travel: {
-      title: 'Travel · Wanderlust',
-      html: `
-        <div class="modal-img-row">
-          <img src="https://picsum.photos/200/200?random=57" alt="Travel landscape 1" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=58" alt="Travel landscape 2" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=59" alt="Travel landscape 3" loading="lazy" />
-        </div>
-        <p class="modal-text" style="margin-top:16px;">
-          During my exchange year in Passau I backpacked across Western Europe; since then, travel has become the best gift I give myself. Different languages, foods, and streets remind me every time that the world's diversity is its greatest charm.
-        </p>
-        <div class="modal-placeholder" style="margin-top:12px; padding:20px;">
-          <span class="placeholder-icon">🗺️</span>
-          Travel map goes here (replace with an actual pins map)
-        </div>
-      `
-    },
-    fitness: {
-      title: 'Fitness · Consistency',
-      html: `
-        <img class="modal-img" src="https://picsum.photos/560/315?random=60" alt="Fitness photo" loading="lazy" />
-        <div class="modal-placeholder" style="margin-top:16px; padding:24px;">
-          <span class="placeholder-icon">📊</span>
-          Workout stats screenshot / training video goes here<br/>
-          <small style="opacity:.7">(replace with actual screenshot or clip)</small>
-        </div>
-        <p class="modal-text">Fitness is my one daily hour of ritual. Not chasing numbers — just enjoying the clarity that comes after a good sweat. Strength training and running are my staples, and they complement dance and snowboarding perfectly.</p>
-      `
-    },
-    more: {
-      title: 'More Moments',
-      html: `
-        <div class="modal-img-row">
-          <img src="https://picsum.photos/200/200?random=45" alt="Moment 1" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=46" alt="Moment 2" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=47" alt="Moment 3" loading="lazy" />
-        </div>
-        <div class="modal-img-row" style="margin-top: 10px;">
-          <img src="https://picsum.photos/200/200?random=48" alt="Moment 4" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=61" alt="Moment 5" loading="lazy" />
-          <img src="https://picsum.photos/200/200?random=62" alt="Moment 6" loading="lazy" />
-        </div>
-        <div class="modal-placeholder" style="margin-top:16px; padding:20px;">
-          <span class="placeholder-icon">🎞️</span>
-          Mixed video / photo compilation goes here<br/>
-          <small style="opacity:.7">(replace with actual Vlog or photo collection)</small>
-        </div>
-        <p class="modal-text">Life is full of moments worth keeping — a great coffee, a spontaneous trip, an evening of genuine laughter with friends. This is my personal scrapbook.</p>
-      `
-    }
-  };
-
-  /* Modal open / close */
-  function openModal(key) {
-    const data = modalData[key];
-    if (!data) return;
-    document.getElementById('modalTitle').textContent = data.title;
-    document.getElementById('modalBody').innerHTML = data.html;
-    document.getElementById('modalOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function closeModalOnBg(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+/* Modal */
+const moData={
+  dance:{title:'Dance · Jazz',html:`<div class="mo-ph"><span class="pi">🎬</span>Dance video goes here</div><img class="mo-img" src="https://picsum.photos/560/315?random=50" alt="" loading="lazy"/><p class="mo-text">Jazz dance is how I decompress — the moment the music starts, every ounce of tension dissolves into the rhythm.</p>`},
+  ski:{title:'Snowboard · Freestyle',html:`<div class="mo-row"><img src="https://picsum.photos/200/200?random=51" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=52" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=53" alt="" loading="lazy"/></div><p class="mo-text">Snowboarding got me hooked on speed and balance. Nothing beats fresh powder and an endless white horizon from the summit.</p>`},
+  craft:{title:'Crafts · Pottery',html:`<img class="mo-img" src="https://picsum.photos/560/315?random=54" alt="" loading="lazy"/><div class="mo-row" style="grid-template-columns:1fr 1fr;margin-top:12px"><img src="https://picsum.photos/280/280?random=55" alt="" loading="lazy"/><img src="https://picsum.photos/280/280?random=56" alt="" loading="lazy"/></div><p class="mo-text" style="margin-top:14px">Pottery was the first time I truly understood "being present." Every piece is one-of-a-kind.</p>`},
+  travel:{title:'Travel · Wanderlust',html:`<div class="mo-row"><img src="https://picsum.photos/200/200?random=57" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=58" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=59" alt="" loading="lazy"/></div><p class="mo-text" style="margin-top:14px">During my exchange year in Passau I backpacked across Western Europe; since then, travel has become the best gift I give myself.</p><div class="mo-ph" style="margin-top:12px;padding:20px"><span class="pi">🗺️</span>Travel map goes here</div>`},
+  fitness:{title:'Fitness · Consistency',html:`<img class="mo-img" src="https://picsum.photos/560/315?random=60" alt="" loading="lazy"/><div class="mo-ph" style="margin-top:14px;padding:22px"><span class="pi">📊</span>Workout stats / training video goes here</div><p class="mo-text">Fitness is my one daily hour of ritual. Strength training and running are my staples.</p>`},
+  more:{title:'More Moments',html:`<div class="mo-row"><img src="https://picsum.photos/200/200?random=45" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=46" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=47" alt="" loading="lazy"/></div><div class="mo-row" style="margin-top:9px"><img src="https://picsum.photos/200/200?random=48" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=61" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=62" alt="" loading="lazy"/></div><p class="mo-text" style="margin-top:12px">Life is full of moments worth keeping — a great coffee, a spontaneous trip, an evening of genuine laughter with friends.</p>`}
+};
+function openMo(k){const d=moData[k];if(!d)return;document.getElementById('moTitle').textContent=d.title;document.getElementById('moBody').innerHTML=d.html;document.getElementById('mo').classList.add('active');document.body.style.overflow='hidden';}
+function closeMo(){document.getElementById('mo').classList.remove('active');document.body.style.overflow='';}
+function closeMoBg(e){if(e.target===document.getElementById('mo'))closeMo();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMo();});
 </script>
-
 </body>
 </html>
