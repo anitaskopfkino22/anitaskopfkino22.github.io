@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Anita Han · Personal Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f8f8f6;--surface:#fff;--border:#e8e8e4;--text:#1a1a18;--muted:#888884;
+  --a1:#a8d5c2;--a2:#b8c9f0;--a3:#f5d6b8;
+  --grad:linear-gradient(135deg,#a8d5c2,#b8c9f0);
+  --s1:0 2px 8px rgba(0,0,0,.06);--s2:0 4px 16px rgba(0,0,0,.08);--s3:0 16px 48px rgba(0,0,0,.14);
+  --r:18px;--fw:1200px;
+  --fb:'DM Sans',-apple-system,sans-serif;
+  --fs:'DM Serif Display',Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;border-radius:var(--r)}
+a{color:inherit;text-decoration:none}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:200;padding:15px 32px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(24px) saturate(1.5);background:rgba(248,248,246,.9);border-bottom:1px solid rgba(0,0,0,.06);box-shadow:var(--s1)}
+.nav-logo{font-family:var(--fs);font-size:17px;font-weight:600}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:12px;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+
+/* Layout */
+.wrap{max-width:var(--fw);margin:0 auto;padding:0 40px}
+.sec{padding:100px 0}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.sec-title{font-family:var(--fs);font-size:clamp(2rem,4vw,2.8rem);font-weight:600;line-height:1.2;color:var(--text);margin-bottom:48px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s,background .2s;font-family:var(--fb)}
+.btn:active{transform:scale(.97)!important}
+.btn-p{background:var(--grad);color:var(--text);box-shadow:0 4px 20px rgba(168,213,194,.4)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(168,213,194,.5)}
+.btn-g{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
+.btn-g:hover{background:var(--text);color:var(--surface);transform:translateY(-2px)}
+
+/* Card base */
+.card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--s2);overflow:hidden}
+
+/* ── Section Perspective Tilt ── */
+.sec-wrap{perspective:1200px;perspective-origin:50% 60%}
+.sec-inner{
+  transform-origin:50% 100%;
+  transform:rotateX(18deg) translateY(30px);
+  opacity:0;
+  box-shadow:0 -4px 32px rgba(168,213,194,.18),0 -1px 0 rgba(255,255,255,.6),0 32px 80px rgba(0,0,0,.08);
+  border-radius:24px;
+  background:var(--bg);
+  transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .7s ease,box-shadow .9s ease;
+  will-change:transform,opacity;
+  position:relative;
+}
+.sec-inner.revealed{transform:rotateX(0deg) translateY(0);opacity:1;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.sec-inner::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 40%,rgba(168,213,194,.6) 60%,transparent);border-radius:1px;opacity:1;transition:opacity .9s ease;pointer-events:none;z-index:1}
+.sec-inner.revealed::before{opacity:0}
+#hero .sec-inner{transform:none;opacity:1;box-shadow:none;border-radius:0;background:transparent}
+#hero .sec-inner::before{display:none}
+
+/* ── Merged Hero + About ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:center;padding:100px 40px 80px;max-width:var(--fw);margin:0 auto;position:relative}
+.hero-left{position:relative;z-index:1}
+.hero-name{font-family:var(--fs);font-size:clamp(2.8rem,6vw,5rem);font-weight:600;letter-spacing:-.02em;line-height:1.05;margin-bottom:20px;background:linear-gradient(135deg,#2d2d2b 0%,#5a8a7a 55%,#7a8fbf 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:13px;color:var(--muted);letter-spacing:.1em;margin-bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero-sub span::after{content:'·';margin-left:10px;color:var(--a1)}
+.hero-sub span:last-child::after{content:''}
+.hero-tag{font-size:clamp(.95rem,1.8vw,1.1rem);font-family:var(--fs);font-style:italic;color:var(--muted);margin-bottom:36px;max-width:480px}
+.hero-photo-wrap{position:relative;flex-shrink:0}
+.hero-photo-wrap img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r);box-shadow:var(--s3)}
+.about-badge{position:absolute;bottom:-14px;left:-14px;background:var(--surface);border-radius:14px;padding:12px 18px;box-shadow:var(--s3);border:1px solid var(--border);font-size:12px;font-weight:500}
+.badge-num{font-family:var(--fs);font-size:26px;font-weight:600;display:block;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+/* Decorative orbs */
+#hero::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,213,194,.22) 0%,transparent 70%);top:-80px;right:0;pointer-events:none;animation:orb1 8s ease-in-out infinite}
+#hero::after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(184,201,240,.18) 0%,transparent 70%);bottom:-40px;left:-60px;pointer-events:none;animation:orb2 10s ease-in-out infinite}
+@keyframes orb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,15px) scale(1.06)}}
+@keyframes orb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(15px,-10px) scale(1.04)}}
+
+/* Work Timeline */
+.work-layout{display:grid;grid-template-columns:260px 1fr;gap:0 72px;align-items:start}
+.timeline{position:relative;padding:10px 0;display:flex;flex-direction:column}
+.timeline::before{content:'';position:absolute;right:0;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--a1),var(--a2),var(--a3));border-radius:2px;z-index:0}
+.tl-node{position:relative;z-index:1;display:flex;flex-direction:row;align-items:center;cursor:pointer;margin-bottom:120px;width:100%}
+.tl-node:last-child{margin-bottom:0}
+.tl-period{flex:1;min-width:0;font-size:11px;font-weight:500;color:var(--muted);text-align:right;line-height:1.5;letter-spacing:.01em;padding-right:16px;white-space:nowrap}
+.tl-dot{flex-shrink:0;position:relative;right:-9px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .25s ease,box-shadow .25s ease;z-index:2}
+.tl-dot-i{width:8px;height:8px;border-radius:50%}
+.d0{background:#e6f8f2;border:2px solid #5DCAA5}.d0 .tl-dot-i{background:linear-gradient(135deg,#5DCAA5,#1D9E75)}
+.d1{background:#e6f1fb;border:2px solid #85B7EB}.d1 .tl-dot-i{background:linear-gradient(135deg,#85B7EB,#378ADD)}
+.d2{background:#faeeda;border:2px solid #FAC775}.d2 .tl-dot-i{background:linear-gradient(135deg,#FAC775,#BA7517)}
+.tl-node:hover .tl-dot{transform:scale(1.5)}
+.tl-node:hover .d0{box-shadow:0 0 0 5px rgba(93,202,165,.2)}
+.tl-node:hover .d1{box-shadow:0 0 0 5px rgba(133,183,235,.2)}
+.tl-node:hover .d2{box-shadow:0 0 0 5px rgba(250,199,117,.22)}
+.wca{position:relative;min-height:0}
+.wc-hint{font-size:13px;color:var(--muted);padding:40px 0;display:flex;align-items:center;gap:8px}
+.wc-hint.hidden{display:none}
+.wc{position:absolute;inset:0;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--s2);padding:28px 32px;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .32s ease,transform .32s ease}
+.wc.vis{opacity:1;pointer-events:auto;transform:translateY(0);position:relative}
+.wc-co{font-family:var(--fs);font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.3}
+.wc-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.wc-role{font-size:13px;color:var(--muted);font-weight:400}
+.wc-badge{font-size:11px;font-weight:500;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:3px 11px;white-space:nowrap}
+.wc-div{height:1px;background:var(--border);margin-bottom:18px}
+.wc-desc{font-size:13.5px;color:#555;line-height:1.85;margin-bottom:20px}
+.wc-tags{display:flex;flex-wrap:wrap;gap:7px}
+.wt{font-size:11.5px;font-weight:500;padding:4px 12px;border-radius:7px;border:1px solid}
+.wt-t{background:#e6f8f2;color:#0F6E56;border-color:#9FE1CB}
+.wt-b{background:#e6f1fb;color:#185FA5;border-color:#B5D4F4}
+.wt-a{background:#faeeda;color:#854F0B;border-color:#FAC775}
+
+/* Edu */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.edu-card{padding:32px;height:100%;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease;cursor:default}
+.edu-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 0 0 1.5px rgba(168,213,194,.55),0 20px 56px rgba(0,0,0,.13),0 0 32px rgba(168,213,194,.18)}
+.edu-card h3{font-family:var(--fs);font-size:1.2rem;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.edu-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.edu-item:last-of-type{border-bottom:none}
+.edu-school{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;transition:font-size .3s ease}
+.edu-card:hover .edu-school{font-size:17.5px}
+.edu-deg{font-size:13.5px;color:var(--muted);line-height:1.65;transition:font-size .3s ease}
+.edu-card:hover .edu-deg{font-size:14.5px}
+.honors{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.h-tag{font-size:11px;font-weight:500;padding:4px 11px;border-radius:20px;background:rgba(168,213,194,.2);color:#4a8a72;border:1px solid rgba(168,213,194,.4)}
+.skill-cloud{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}
+.sk{font-size:12px;font-weight:500;padding:5px 13px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text);transition:all .2s;cursor:default}
+.sk:hover{background:var(--text);color:var(--surface);border-color:var(--text)}
+.lang-row{display:flex;gap:10px;flex-wrap:wrap}
+.lt{font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;color:var(--text)}
+.lt.zh{background:rgba(245,214,184,.4);border:1px solid rgba(245,214,184,.8)}
+.lt.de{background:rgba(184,201,240,.4);border:1px solid rgba(184,201,240,.8)}
+.lt.en{background:rgba(168,213,194,.4);border:1px solid rgba(168,213,194,.8)}
+
+/* Projects — Horizontal Parallax Stack */
+#projects{padding:100px 0}
+.proj-sticky-wrap{position:relative;height:260vh}
+.proj-sticky{position:sticky;top:80px;overflow:hidden;padding:0 40px}
+.proj-sticky-inner{max-width:var(--fw);margin:0 auto}
+.proj-header{margin-bottom:36px}
+.proj-track{position:relative;height:420px}
+.proj-card{position:absolute;top:0;width:360px;height:420px;border-radius:22px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--s3);overflow:hidden;display:flex;flex-direction:column;will-change:transform;transition:transform .65s cubic-bezier(.22,1,.36,1),box-shadow .3s ease,filter .65s ease}
+.proj-card:hover{box-shadow:0 24px 64px rgba(0,0,0,.16)}
+.proj-img{width:100%;height:200px;object-fit:cover;border-radius:0;flex-shrink:0}
+.proj-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.proj-name{font-family:var(--fs);font-size:1rem;font-weight:600;margin-bottom:9px;line-height:1.4}
+.proj-desc{font-size:12.5px;color:#666;line-height:1.7;flex:1;margin-bottom:14px}
+.proj-meta{display:flex;flex-direction:column;gap:6px}
+.proj-role{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.proj-stack{display:flex;flex-wrap:wrap;gap:5px}
+.stag{font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(184,201,240,.3);color:#4a5a8a;border:1px solid rgba(184,201,240,.5)}
+.proj-progress{display:flex;gap:8px;margin-top:20px}
+.proj-pip{width:24px;height:3px;border-radius:3px;background:var(--border);transition:background .3s,width .3s}
+.proj-pip.active{background:var(--a1);width:40px}
+
+/* Hobbies — 3D Tilt */
+.hobbies-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,190px);gap:14px}
+.hobby-card{position:relative;border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--s2);transform-style:preserve-3d;transition:box-shadow .3s ease;will-change:transform}
+.hobby-card-inner{position:absolute;inset:0;transform-style:preserve-3d}
+.hobby-card img{width:100%;height:100%;object-fit:cover;border-radius:0;transition:transform .4s ease}
+.hobby-card:hover img{transform:scale(1.04)}
+.hobby-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.62) 0%,transparent 55%);transition:background .3s}
+.hobby-card:hover .hobby-overlay{background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.08) 60%)}
+.hobby-shine{position:absolute;inset:0;border-radius:var(--r);background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.28) 0%,transparent 65%);opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:2}
+.hobby-card:hover .hobby-shine{opacity:1}
+.hobby-name{position:absolute;bottom:16px;left:18px;color:#fff;font-size:13px;font-weight:600;letter-spacing:.04em;display:flex;flex-direction:column;gap:2px;z-index:3;transform:translateZ(20px)}
+.hobby-sub{font-size:10px;font-weight:400;opacity:.8;letter-spacing:.06em}
+.hobby-hint{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);border-radius:20px;padding:3px 9px;font-size:10px;color:#fff;letter-spacing:.06em;opacity:0;transition:opacity .3s;z-index:3}
+.hobby-card:hover .hobby-hint{opacity:1}
+
+/* Contact */
+.contact-wrap{background:var(--text);color:var(--surface);border-radius:28px;padding:72px 56px;text-align:center;position:relative;overflow:hidden;margin:0 40px}
+.contact-wrap::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,213,194,.12) 0%,transparent 70%);top:-120px;right:-100px;pointer-events:none}
+.ct-title{font-family:var(--fs);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:14px;font-weight:600}
+.ct-sub{color:rgba(255,255,255,.6);margin-bottom:44px;font-size:14px}
+.ct-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-bottom:28px}
+.ct-link{display:flex;align-items:center;gap:10px;padding:11px 20px;border-radius:50px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-size:13px;font-weight:500;transition:all .2s;cursor:pointer;font-family:var(--fb)}
+.ct-link:hover{background:rgba(255,255,255,.16);color:#fff;transform:translateY(-2px)}
+.ct-link svg{flex-shrink:0}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--surface);padding:11px 22px;border-radius:50px;font-size:13px;font-weight:500;box-shadow:var(--s3);opacity:0;transition:all .3s ease;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Footer */
+.footer{text-align:center;padding:36px 32px;font-size:13px;color:var(--muted)}
+
+/* Modal */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);z-index:300;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
+.mo.active{opacity:1;pointer-events:all}
+.mo-box{background:var(--surface);border-radius:22px;max-width:580px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.28);transform:translateY(24px) scale(.96);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.mo.active .mo-box{transform:none}
+.mo-head{display:flex;justify-content:space-between;align-items:center;padding:26px 30px 0;margin-bottom:18px}
+.mo-title{font-family:var(--fs);font-size:1.3rem;font-weight:600}
+.mo-close{width:32px;height:32px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted);transition:background .2s,color .2s}
+.mo-close:hover{background:var(--text);color:var(--surface)}
+.mo-body{padding:0 30px 30px}
+.mo-img{width:100%;border-radius:13px;margin-bottom:18px;aspect-ratio:16/9;object-fit:cover}
+.mo-ph{background:linear-gradient(135deg,rgba(168,213,194,.2),rgba(184,201,240,.2));border:2px dashed var(--border);border-radius:13px;padding:32px;text-align:center;color:var(--muted);margin-bottom:14px;font-size:13.5px;line-height:1.6}
+.mo-ph .pi{font-size:32px;margin-bottom:10px;display:block}
+.mo-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+.mo-row img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}
+.mo-text{font-size:13.5px;color:#555;line-height:1.8}
+
+/* Responsive */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}.about-img-wrap{max-width:440px;margin:0 auto}
+  .edu-grid{grid-template-columns:1fr}
+  .hobbies-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,200px)}
+  .proj-card{width:300px}.proj-card:nth-child(2){left:316px}.proj-card:nth-child(3){left:632px}
+}
+@media(max-width:640px){
+  .wrap{padding:0 18px}.sec{padding:60px 0}.nav-links{display:none}
+  .work-layout{grid-template-columns:1fr;gap:28px 0}
+  .hobbies-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,160px)}
+  .contact-wrap{padding:44px 22px;margin:0 16px;border-radius:18px}
+  .mo-row{grid-template-columns:repeat(2,1fr)}.mo-body{padding:0 18px 18px}.mo-head{padding:18px 18px 0}
+}
+#edu{background:var(--bg)}
+#projects{background:var(--surface)}
+#hobbies{background:var(--bg)}
+#contact{background:var(--bg)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">Anita Han</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li><li><a href="#work">Experience</a></li>
+    <li><a href="#projects">Projects</a></li><li><a href="#edu">Education</a></li>
+    <li><a href="#hobbies">Hobbies</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero + About (merged) -->
+<section id="hero">
+  <div class="sec-wrap"><div class="sec-inner revealed">
+    <div class="hero">
+      <div class="hero-left">
+        <p class="hero-sub"><span>After-Sales Technical Support</span><span>Project Management</span><span>German Interpreter</span></p>
+        <h1 class="hero-name">Hi there,<br/>I'm Anita</h1>
+        <p class="hero-tag">Driving processes through data, bridging cultures through communication.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#work" class="btn btn-p">Explore My Experience
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-g">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <img src="https://picsum.photos/480/600?random=20" alt="Anita Han" loading="lazy"/>
+        <div class="about-badge"><span class="badge-num">3+</span>years of experience</div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Work Experience -->
+<section class="sec" id="work" style="background:var(--bg)">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="wrap">
+      <p class="sec-label">Experience</p>
+      <h2 class="sec-title">Work Experience</h2>
+      <div class="work-layout">
+        <div class="timeline" id="workTimeline" onmouseleave="hideWC()">
+          <div class="tl-node" onmouseenter="showWC(0)">
+            <div class="tl-period">2022-08-01<br/>— Present</div>
+            <div class="tl-dot d0"><div class="tl-dot-i"></div></div>
+          </div>
+          <div class="tl-node" onmouseenter="showWC(1)">
+            <div class="tl-period">2022-01-01<br/>— 2022-05-31</div>
+            <div class="tl-dot d1"><div class="tl-dot-i"></div></div>
+          </div>
+          <div class="tl-node" onmouseenter="showWC(2)">
+            <div class="tl-period">2021-04-01<br/>— 2021-09-30</div>
+            <div class="tl-dot d2"><div class="tl-dot-i"></div></div>
+          </div>
+        </div>
+        <div class="wca" id="wca">
+          <div class="wc-hint" id="wc-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 15l6 6M9 11a6 6 0 1 0 12 0 6 6 0 0 0-12 0"/></svg>
+            Hover a dot to explore
+          </div>
+          <div class="wc" id="wc0">
+            <div class="wc-co">Beijing Mercedes-Benz Sales Service Co., Ltd.</div>
+            <div class="wc-meta"><span class="wc-role">After-Sales / VPC Technical Support</span><span class="wc-badge">2022-08-01 — Present</span></div>
+            <div class="wc-div"></div>
+            <p class="wc-desc">Reduced KPI report generation time by 80% through data analysis and PowerBI automation; led multiple cross-departmental projects end-to-end — from feasibility assessment to contract sign-off — ensuring smooth system rollouts.</p>
+            <div class="wc-tags"><span class="wt wt-t">Quality Analysis</span><span class="wt wt-t">8D Reporting</span><span class="wt wt-t">Project Management</span><span class="wt wt-t">Cross-dept. Coordination</span><span class="wt wt-t">Process Optimization</span><span class="wt wt-t">PowerBI Automation</span></div>
+          </div>
+          <div class="wc" id="wc1">
+            <div class="wc-co">DiDi International</div>
+            <div class="wc-meta"><span class="wc-role">Product Operations Intern</span><span class="wc-badge">2022-01-01 — 2022-05-31</span></div>
+            <div class="wc-div"></div>
+            <p class="wc-desc">Managed operations for the international online management platform, leveraging data analysis to drive product iteration and collaborating with payment and pricing teams to ensure on-time delivery.</p>
+            <div class="wc-tags"><span class="wt wt-b">Product Operations</span><span class="wt wt-b">Data Analysis</span><span class="wt wt-b">Cross-team Collaboration</span><span class="wt wt-b">Requirement Iteration</span></div>
+          </div>
+          <div class="wc" id="wc2">
+            <div class="wc-co">Bayer Environmental Science</div>
+            <div class="wc-meta"><span class="wc-role">Marketing Intern</span><span class="wc-badge">2021-04-01 — 2021-09-30</span></div>
+            <div class="wc-div"></div>
+            <p class="wc-desc">Independently managed WeChat community channels, growing followers by 1,000+; led 6+ marketing campaigns that brought in nearly 200 new users, handling all copywriting and poster design.</p>
+            <div class="wc-tags"><span class="wt wt-a">Community Management</span><span class="wt wt-a">User Growth</span><span class="wt wt-a">Campaign Planning</span><span class="wt wt-a">Content Creation</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Projects — Sticky Horizontal Stack -->
+<section id="projects">
+  <div class="proj-sticky-wrap" id="projWrap">
+    <div class="proj-sticky">
+      <div class="proj-sticky-inner">
+        <div class="proj-header">
+          <p class="sec-label">Featured Projects</p>
+          <h2 class="sec-title" style="margin-bottom:0">Featured Projects</h2>
+        </div>
+        <div class="proj-track" id="projTrack">
+          <div class="proj-card" id="pc0">
+            <img class="proj-img" src="https://picsum.photos/400/225?random=30" alt="" loading="lazy"/>
+            <div class="proj-body">
+              <h3 class="proj-name">After-Sales Data Automation System</h3>
+              <p class="proj-desc">Designed a PowerBI automation template to replace manual KPI reporting, cutting report generation time from <strong>2 days to 2 hours</strong>.</p>
+              <div class="proj-meta"><span class="proj-role">Project Lead & Designer</span><div class="proj-stack"><span class="stag">PowerBI</span><span class="stag">Excel</span><span class="stag">SQL</span></div></div>
+            </div>
+          </div>
+          <div class="proj-card" id="pc1">
+            <img class="proj-img" src="https://picsum.photos/400/225?random=31" alt="" loading="lazy"/>
+            <div class="proj-body">
+              <h3 class="proj-name">New System Launch Process Redesign</h3>
+              <p class="proj-desc">As HQ system launch coordinator, led business impact assessment and redesigned end-to-end workflow, achieving <strong>95% user satisfaction</strong>.</p>
+              <div class="proj-meta"><span class="proj-role">HQ System Launch Coordinator</span><div class="proj-stack"><span class="stag">Cross-dept. Coordination</span><span class="stag">Process Design</span><span class="stag">Change Management</span></div></div>
+            </div>
+          </div>
+          <div class="proj-card" id="pc2">
+            <img class="proj-img" src="https://picsum.photos/400/225?random=32" alt="" loading="lazy"/>
+            <div class="proj-body">
+              <h3 class="proj-name">Technical Exchange Program — Full Lifecycle</h3>
+              <p class="proj-desc">Built a technical exchange program from scratch: feasibility study, cross-functional alignment across finance, legal, and tax, contract signing, and on-site execution.</p>
+              <div class="proj-meta"><span class="proj-role">Project Lead</span><div class="proj-stack"><span class="stag">Cross-dept. Communication</span><span class="stag">Project Management</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="proj-progress" id="projProgress">
+          <div class="proj-pip active"></div>
+          <div class="proj-pip"></div>
+          <div class="proj-pip"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Education & Skills -->
+<section class="sec" id="edu">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="wrap">
+      <p class="sec-label">Education & Skills</p>
+      <h2 class="sec-title">Education & Skills</h2>
+      <div class="edu-grid">
+        <div class="card edu-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a8d5c2" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3.33 1.67 8.67 1.67 12 0v-5"/></svg>Education</h3>
+          <div class="edu-item">
+            <div class="edu-school">Beijing Foreign Studies University</div>
+            <div class="edu-deg">German Interpretation · Master's (2020–2022)<br/>German Language & Literature · Bachelor's (2016–2020)<br/><span style="color:var(--muted)">Exchange student — University of Passau, Germany (2018–2019)</span></div>
+          </div>
+          <div style="margin-top:8px">
+            <p style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Honors & Scholarships</p>
+            <div class="honors"><span class="h-tag">🏆 National Scholarship</span><span class="h-tag">🌏 CSC State Scholarship</span><span class="h-tag">🎓 Beijing Outstanding Graduate</span><span class="h-tag">⭐ Outstanding Student Leader</span></div>
+          </div>
+        </div>
+        <div class="card edu-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b8c9f0" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Skills & Languages</h3>
+          <p style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px">Professional Skills</p>
+          <div class="skill-cloud"><span class="sk">Data Analysis</span><span class="sk">Excel</span><span class="sk">PowerBI</span><span class="sk">Project Management</span><span class="sk">Cross-dept. Collaboration</span><span class="sk">Process Optimization</span><span class="sk">German Interpretation</span><span class="sk">Cross-cultural Communication</span></div>
+          <p style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:18px 0 11px">Languages</p>
+          <div class="lang-row"><span class="lt zh">Mandarin (Native)</span><span class="lt de">German (C2)</span><span class="lt en">English (C2)</span></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Hobbies — 3D Tilt -->
+<section class="sec" id="hobbies">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="wrap">
+      <p class="sec-label">Hobbies</p>
+      <h2 class="sec-title">Hobbies & Interests</h2>
+      <div class="hobbies-grid" id="hobbiesGrid">
+        <div class="hobby-card" onclick="openMo('dance')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=40" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Dance<span class="hobby-sub">Jazz</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('ski')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=41" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Snowboard<span class="hobby-sub">Freestyle</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('craft')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=42" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Crafts<span class="hobby-sub">Pottery</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('travel')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=43" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Travel<span class="hobby-sub">Wanderlust</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('fitness')"><div class="hobby-card-inner"><img src="https://picsum.photos/400/400?random=44" alt="" loading="lazy"/><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">Fitness<span class="hobby-sub">Consistency</span></div><span class="hobby-hint">View more</span></div></div>
+        <div class="hobby-card" onclick="openMo('more')" style="overflow:hidden"><div class="hobby-card-inner" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr"><img src="https://picsum.photos/200/200?random=45" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/><img src="https://picsum.photos/200/200?random=46" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/><img src="https://picsum.photos/200/200?random=47" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/><img src="https://picsum.photos/200/200?random=48" alt="" loading="lazy" style="border-radius:0;width:100%;height:100%;object-fit:cover"/></div><div class="hobby-overlay"></div><div class="hobby-shine"></div><div class="hobby-name">More Moments<span class="hobby-sub">Life in Frames</span></div><span class="hobby-hint">View more</span></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Contact -->
+<section class="sec" id="contact">
+  <div class="sec-wrap"><div class="sec-inner">
+    <div class="contact-wrap">
+      <p class="sec-label" style="color:rgba(255,255,255,.4)">Get In Touch</p>
+      <h2 class="ct-title">Let's Talk</h2>
+      <p class="ct-sub">Open to collaboration, interesting problems, or simply a good conversation 👋</p>
+      <div class="ct-links">
+        <button class="ct-link" onclick="copyEmail()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>anita.han[at]email.com · Copy Email</button>
+        <a class="ct-link" href="https://linkedin.com/in/anita-han" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+        <a class="ct-link" href="#" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>Xiaohongshu</a>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<footer class="footer"><p>© 2026 Anita Han · Made with ☕ and Vibe Coding</p></footer>
+<div class="toast" id="toast">✓ Email copied to clipboard</div>
+
+<div class="mo" id="mo" onclick="closeMoBg(event)">
+  <div class="mo-box">
+    <div class="mo-head"><h2 class="mo-title" id="moTitle"></h2><button class="mo-close" onclick="closeMo()">✕</button></div>
+    <div class="mo-body" id="moBody"></div>
+  </div>
+</div>
+
+<script>
+/* 1. Section perspective tilt */
+const secInners=document.querySelectorAll('.sec-inner:not(.revealed)');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>0.08){e.target.classList.add('revealed');obs.unobserve(e.target);}});},{threshold:[0.08,0.2,0.4]});
+secInners.forEach(el=>obs.observe(el));
+
+/* 2. Projects — fan-out: card1 centre → left, card2 enters centre, card3 enters right */
+const projWrap=document.getElementById('projWrap');
+const projCards=[document.getElementById('pc0'),document.getElementById('pc1'),document.getElementById('pc2')];
+const projPips=document.querySelectorAll('.proj-pip');
+const CW=360, GAP=20;
+
+function easeIO(t){return t<.5?2*t*t:-1+(4-2*t)*t}
+
+function updateProj(){
+  const rect=projWrap.getBoundingClientRect();
+  const wrapH=projWrap.offsetHeight;
+  const viewH=window.innerHeight;
+  const progress=Math.max(0,Math.min(1,-rect.top/(wrapH-viewH)));
+
+  // Track inner width (sticky panel minus padding)
+  const trackW=projWrap.offsetWidth - 80;
+
+  // Final resting positions when all 3 are on screen:
+  // [left=0, centre=CW+GAP, right=(CW+GAP)*2] but shifted so the group is centred in trackW
+  const totalW = CW*3 + GAP*2;
+  const groupLeft = Math.max(0, (trackW - totalW) / 2);
+  const finalX = [groupLeft, groupLeft + CW + GAP, groupLeft + (CW+GAP)*2];
+
+  // Starting position: card0 centred alone
+  const startX0 = Math.max(0, (trackW - CW) / 2);
+  // Cards 1 and 2 start off-screen right
+  const offRight = trackW + 60;
+
+  // Phase 1 (progress 0→0.5): card1 slides in from right, card0 slides left to finalX[0]
+  const t1 = Math.max(0, Math.min(1, progress / 0.5));
+  // Phase 2 (progress 0.5→1): card2 slides in from right, card1 slides left to finalX[1]
+  const t2 = Math.max(0, Math.min(1, (progress - 0.5) / 0.5));
+
+  const e1=easeIO(t1), e2=easeIO(t2);
+
+  // card0: starts at startX0, moves to finalX[0] during phase1, stays there
+  const x0 = startX0 + (finalX[0] - startX0) * e1;
+
+  // card1: starts offRight, moves to finalX[1] (its centre resting spot) during phase1,
+  //        then nudges left to finalX[1]→finalX[1] (already there) — no further move needed
+  //        Actually card1 enters to centre=(startX0 during phase1) then shuffles left in phase2
+  const centreX = startX0; // where card1 initially lands (same as card0's start)
+  const x1_phase1 = offRight + (centreX - offRight) * e1;       // enters to centre
+  const x1_phase2 = centreX + (finalX[1] - centreX) * e2;       // nudges to final
+  const x1 = t1 < 1 ? x1_phase1 : x1_phase2;
+
+  // card2: starts offRight, slides in to finalX[2] during phase2
+  const x2 = offRight + (finalX[2] - offRight) * e2;
+
+  projCards[0].style.transform=`translateX(${x0}px)`;
+  projCards[0].style.zIndex=3;
+  projCards[1].style.transform=`translateX(${x1}px)`;
+  projCards[1].style.zIndex=e1>0?4:1;
+  projCards[2].style.transform=`translateX(${x2}px)`;
+  projCards[2].style.zIndex=e2>0?5:1;
+
+  const activeCard=e2>0.5?2:e1>0.5?1:0;
+  projPips.forEach((pip,i)=>pip.classList.toggle('active',i===activeCard));
+}
+window.addEventListener('scroll',updateProj,{passive:true});
+window.addEventListener('load',updateProj);
+updateProj();
+
+/* 3. Hobby 3D tilt */
+document.querySelectorAll('.hobby-card').forEach(card=>{
+  const shine=card.querySelector('.hobby-shine');
+  let raf=null,cRX=0,cRY=0,tRX=0,tRY=0,animating=false;
+  function lerp(a,b,t){return a+(b-a)*t}
+  function animate(){
+    cRX=lerp(cRX,tRX,.1);cRY=lerp(cRY,tRY,.1);
+    card.style.transform=`perspective(700px) rotateX(${cRX}deg) rotateY(${cRY}deg) scale3d(1.02,1.02,1.02)`;
+    card.style.boxShadow=`0 ${20+Math.abs(cRX)}px ${48+Math.abs(cRX)*2}px rgba(0,0,0,.18)`;
+    if(Math.abs(cRX-tRX)>0.02||Math.abs(cRY-tRY)>0.02){raf=requestAnimationFrame(animate);}
+    else{animating=false;}
+  }
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    tRX=(0.5-y)*14;tRY=(x-0.5)*16;
+    if(shine)shine.style.background=`radial-gradient(circle at ${x*100}% ${y*100}%,rgba(255,255,255,.32) 0%,transparent 60%)`;
+    if(!animating){animating=true;raf=requestAnimationFrame(animate);}
+  });
+  card.addEventListener('mouseleave',()=>{
+    tRX=0;tRY=0;
+    card.style.transition='transform .6s cubic-bezier(.22,1,.36,1),box-shadow .6s ease';
+    card.style.transform='perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+    card.style.boxShadow='';
+    setTimeout(()=>{card.style.transition='';},650);
+    cancelAnimationFrame(raf);animating=false;
+  });
+});
+
+/* Work cards */
+let curW=-1;
+function showWC(i){
+  document.getElementById('wc-hint').classList.add('hidden');
+  const nodes=document.querySelectorAll('.tl-node');
+  if(i===curW)return;
+  if(curW>=0){nodes[curW].classList.remove('active');const old=document.getElementById('wc'+curW);old.classList.remove('vis');old.style.position='absolute';}
+  nodes[i].classList.add('active');curW=i;
+  const next=document.getElementById('wc'+i);
+  requestAnimationFrame(()=>{next.classList.add('vis');next.style.position='';});
+}
+function hideWC(){
+  if(curW<0)return;
+  document.querySelectorAll('.tl-node')[curW].classList.remove('active');
+  document.getElementById('wc'+curW).classList.remove('vis');
+  curW=-1;document.getElementById('wc-hint').classList.remove('hidden');
+}
+
+/* Copy email */
+function copyEmail(){
+  const e='anita.han@email.com';
+  navigator.clipboard?navigator.clipboard.writeText(e).then(showToast):((()=>{const t=document.createElement('textarea');t.value=e;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast();})());
+}
+function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+/* Modal */
+const moData={
+  dance:{title:'Dance · Jazz',html:`<div class="mo-ph"><span class="pi">🎬</span>Dance video goes here</div><img class="mo-img" src="https://picsum.photos/560/315?random=50" alt="" loading="lazy"/><p class="mo-text">Jazz dance is how I decompress — the moment the music starts, every ounce of tension dissolves into the rhythm.</p>`},
+  ski:{title:'Snowboard · Freestyle',html:`<div class="mo-row"><img src="https://picsum.photos/200/200?random=51" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=52" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=53" alt="" loading="lazy"/></div><p class="mo-text">Snowboarding got me hooked on speed and balance. Nothing beats fresh powder and an endless white horizon from the summit.</p>`},
+  craft:{title:'Crafts · Pottery',html:`<img class="mo-img" src="https://picsum.photos/560/315?random=54" alt="" loading="lazy"/><div class="mo-row" style="grid-template-columns:1fr 1fr;margin-top:12px"><img src="https://picsum.photos/280/280?random=55" alt="" loading="lazy"/><img src="https://picsum.photos/280/280?random=56" alt="" loading="lazy"/></div><p class="mo-text" style="margin-top:14px">Pottery was the first time I truly understood "being present." Every piece is one-of-a-kind.</p>`},
+  travel:{title:'Travel · Wanderlust',html:`<div class="mo-row"><img src="https://picsum.photos/200/200?random=57" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=58" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=59" alt="" loading="lazy"/></div><p class="mo-text" style="margin-top:14px">During my exchange year in Passau I backpacked across Western Europe; since then, travel has become the best gift I give myself.</p><div class="mo-ph" style="margin-top:12px;padding:20px"><span class="pi">🗺️</span>Travel map goes here</div>`},
+  fitness:{title:'Fitness · Consistency',html:`<img class="mo-img" src="https://picsum.photos/560/315?random=60" alt="" loading="lazy"/><div class="mo-ph" style="margin-top:14px;padding:22px"><span class="pi">📊</span>Workout stats / training video goes here</div><p class="mo-text">Fitness is my one daily hour of ritual. Strength training and running are my staples.</p>`},
+  more:{title:'More Moments',html:`<div class="mo-row"><img src="https://picsum.photos/200/200?random=45" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=46" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=47" alt="" loading="lazy"/></div><div class="mo-row" style="margin-top:9px"><img src="https://picsum.photos/200/200?random=48" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=61" alt="" loading="lazy"/><img src="https://picsum.photos/200/200?random=62" alt="" loading="lazy"/></div><p class="mo-text" style="margin-top:12px">Life is full of moments worth keeping — a great coffee, a spontaneous trip, an evening of genuine laughter with friends.</p>`}
+};
+function openMo(k){const d=moData[k];if(!d)return;document.getElementById('moTitle').textContent=d.title;document.getElementById('moBody').innerHTML=d.html;document.getElementById('mo').classList.add('active');document.body.style.overflow='hidden';}
+function closeMo(){document.getElementById('mo').classList.remove('active');document.body.style.overflow='';}
+function closeMoBg(e){if(e.target===document.getElementById('mo'))closeMo();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMo();});
+</script>
+</body>
+</html>
