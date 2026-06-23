@@ -1159,6 +1159,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMo();});
         if (!d) return;
         addBubble('sent', d.sent, 0);
         addBubble('recv', d.recv, 480);
+        if (action === 'office') {
+  addBubble('recv', '<a class="chat-copy-link" href="./images/resume2026.pdf" target="_blank" rel="noopener">📄 View My Resume (PDF)</a>', 960);}
       });
     })(bars[k]);
   }
